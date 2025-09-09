@@ -24,12 +24,7 @@ ATS Hacker helps recruiters streamline hiring by leveraging **LLMs** and **vecto
 - RAG pipeline with pgVector  
 
 **Database**
-- PostgreSQL + pgVector  
-- Redis (caching)  
-
-**DevOps**
-- Docker + Kubernetes  
-- CI/CD with GitHub Actions  
+- PostgreSQL + pgVector   
 
 ---
 
@@ -39,5 +34,4 @@ flowchart TD
     A[Frontend - Angular] -->|REST/GraphQL| B[Spring Boot Backend]
     B --> C[Spring AI + RAG Engine]
     C --> D[(PostgreSQL + pgVector)]
-    C --> E[(Redis Cache)]
-    B --> F[Notification Services]
+    B --> F[Email Notification Services]
