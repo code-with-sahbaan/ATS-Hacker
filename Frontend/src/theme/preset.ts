@@ -1,7 +1,7 @@
 import Aura from '@primeuix/themes/aura';
 import { definePreset } from '@primeuix/themes';
 
-const THEME_BASE_COLOR = 'yellow';
+const THEME_BASE_COLOR = 'gray';
 const THEME_SECONDARY_COLOR = '#ffffff';
 
 export const MyPreset = definePreset(Aura, {
@@ -22,10 +22,10 @@ export const MyPreset = definePreset(Aura, {
     colorScheme: {
       light: {
         primary: {
-          color: `{${THEME_BASE_COLOR}.500}`,
+          color: `{${THEME_BASE_COLOR}.900}`,
           inverseColor: THEME_SECONDARY_COLOR,
-          hoverColor: `{${THEME_BASE_COLOR}.900}`,
-          activeColor: `{${THEME_BASE_COLOR}.500}`,
+          hoverColor: `{${THEME_BASE_COLOR}.500}`,
+          activeColor: `{${THEME_BASE_COLOR}.900}`,
         },
         highlight: {
           background: `{${THEME_BASE_COLOR}.950}`,

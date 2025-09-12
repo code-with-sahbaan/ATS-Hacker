@@ -1,0 +1,18 @@
+.logo {
+       font-size: 5rem;
+       font-weight: bold;
+       color: black;
+       display: inline-block;
+       cursor: pointer;
+       overflow: hidden;
+       white-space: nowrap;
+
+       /* Show only "NH" initially */
+       width: 1.1ch;
+       transition: width 0.6s ease;
+}
+
+.logo:hover {
+       /* Expand to fit the full word */
+       width: 3ch;
+}
