@@ -1,7 +1,7 @@
-# ATS Hacker (v0.1) 🚀
+# Neo Hire (v0.1) 🚀
 
 An **AI-powered Applicant Tracking System (ATS)** built with **Spring AI**, **RAG (Retrieval-Augmented Generation)**, and **Angular**.  
-ATS Hacker helps recruiters streamline hiring by leveraging **LLMs** and **vector search** to intelligently match candidates to jobs.
+Neo Hire helps recruiters streamline hiring by leveraging **LLMs** and **vector search** to intelligently match candidates to jobs.
 
 ---
 
