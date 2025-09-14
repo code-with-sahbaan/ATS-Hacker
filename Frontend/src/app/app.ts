@@ -3,10 +3,13 @@ import { Title } from '@angular/platform-browser';
 import { ActivatedRoute, NavigationEnd, Router, RouterOutlet } from '@angular/router';
 import { ButtonModule } from 'primeng/button';
 import { filter, map, mergeMap } from 'rxjs';
+import { ProgressSpinner } from 'primeng/progressspinner';
+import { Toast } from 'primeng/toast';
+import { UiService } from './services/ui.service';
 
 @Component({
   selector: 'app-root',
-  imports: [ButtonModule, RouterOutlet],
+  imports: [ButtonModule, RouterOutlet, Toast, ProgressSpinner],
   templateUrl: './app.html',
   styleUrl: './app.css'
 })
@@ -16,6 +19,7 @@ export class App implements OnInit {
     private titleService: Title,
     private router: Router,
     private activatedRoute: ActivatedRoute,
+    public uiService: UiService,
   ) {}
 
   /**

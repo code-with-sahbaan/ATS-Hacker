@@ -5,6 +5,7 @@ import code.with.sahbaan.neohire.Services.UserService;
 import code.with.sahbaan.neohire.Entities.Users;
 import code.with.sahbaan.neohire.Utils.Constants;
 import code.with.sahbaan.neohire.Utils.CustomUserPrincipal;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.oauth2.client.userinfo.DefaultOAuth2UserService;
 import org.springframework.security.oauth2.client.userinfo.OAuth2UserRequest;
@@ -12,6 +13,7 @@ import org.springframework.security.oauth2.core.user.OAuth2User;
 import org.springframework.stereotype.Service;
 
 @Service
+@Slf4j
 public class CustomOAuth2UserServiceImpl extends DefaultOAuth2UserService implements CustomOAuth2UserService {
 
     @Autowired
@@ -28,17 +30,22 @@ public class CustomOAuth2UserServiceImpl extends DefaultOAuth2UserService implem
         String picture = oAuth2User.getAttribute("picture");
 
         // Save or update in DB
-        if (userService.findByEmail(email).isEmpty()) {
-            Users users = Users.builder()
-                    .email(email)
-                    .name(name)
-                    .pictureUrl(picture)
-                    .provider(Constants.PROVIDER_GOOGLE)
-                    .build();
-            userService.saveOrUpdate(users);
-        }
+        try{
+            if (userService.findByEmail(email).isEmpty()) {
+                Users users = Users.builder()
+                        .email(email)
+                        .name(name)
+                        .pictureUrl(picture)
+                        .provider(Constants.PROVIDER_GOOGLE)
+                        .role(Constants.ROLE_CANDIDATE) // default Role
+                        .build();
+                userService.saveOrUpdate(users);
+            }
 
-        return new CustomUserPrincipal(userService.findByEmail(email).get(), oAuth2User.getAttributes());
+            return new CustomUserPrincipal(userService.findByEmail(email).get(), oAuth2User.getAttributes());
+        }catch (Exception e){
+            return null;
+        }
     }
 
 }
