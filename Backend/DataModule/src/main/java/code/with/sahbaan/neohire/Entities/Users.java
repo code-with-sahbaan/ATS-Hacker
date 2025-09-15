@@ -1,7 +1,12 @@
 package code.with.sahbaan.neohire.Entities;
 
+import code.with.sahbaan.neohire.Entities.Candidate.Education;
+import code.with.sahbaan.neohire.Entities.Candidate.Experience;
 import jakarta.persistence.*;
 import lombok.*;
+
+import java.util.HashSet;
+import java.util.Set;
 
 @Entity
 @Getter
@@ -31,4 +36,20 @@ public class Users {
 
     @Column(name = "ROLE")
     private String role;
+
+    @Column(name = "CITY")
+    private String city;
+
+    @Column(name = "COUNTRY")
+    private String country;
+
+    @Column(name = "SKILLS")
+    private String skills;
+
+    @OneToMany(mappedBy = "candidate", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+    private Set<Experience> experiences = new HashSet<>();
+
+    @OneToMany(mappedBy = "candidate", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+    private Set<Education> educations = new HashSet<>();
+
 }
