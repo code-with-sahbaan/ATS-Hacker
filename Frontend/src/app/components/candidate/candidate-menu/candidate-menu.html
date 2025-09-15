@@ -1,0 +1,24 @@
+<div style="padding: 20px;">
+    <p-menubar [model]="items">
+        <ng-template #start>
+            <div class="flex">
+                <p class="logo">Neo</p>
+                <p class="logo">Hire</p>
+            </div>
+        </ng-template>
+        <ng-template #item let-item let-root="root">
+            <a pRipple class="flex items-center p-menubar-item-link">
+                <i class="{{item.icon}}"></i>
+                <span>{{ item.label }}</span>
+                @if (item.items) {
+                <i [ngClass]="['ml-auto pi', root ? 'pi-angle-down' : 'pi-angle-right']"></i>
+                }
+            </a>
+        </ng-template>
+        <ng-template #end>
+            <p-menu #menu [model]="endItems" [popup]="true" />
+            <p-button size="small" (click)="menu.toggle($event)" icon="pi pi-user text-white" />
+        </ng-template>
+    </p-menubar>
+    <router-outlet></router-outlet>
+</div>

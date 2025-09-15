@@ -3,6 +3,8 @@ import { UserService } from '../../services/user.service';
 import { UiService } from '../../services/ui.service';
 import { finalize } from 'rxjs';
 import { environment } from '../../../environments/environment';
+import { getHomePageRedirection } from '../../utils/common.util';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-redirect',
@@ -12,7 +14,7 @@ import { environment } from '../../../environments/environment';
 })
 export class Redirect implements OnInit {
 
-  constructor(public userService: UserService, public uiService: UiService){}
+  constructor(public userService: UserService, public uiService: UiService, public router: Router){}
 
   ngOnInit(): void {
     setTimeout(() => this.performRedirect(), 0);
@@ -32,6 +34,10 @@ export class Redirect implements OnInit {
         next: (response) => {
           // Showing success Toast
           this.uiService.showSuccess(response.responseMessage);
+          const body = response.responseBody;
+          this.userService.currentUser = body;
+          const url = getHomePageRedirection(body);
+          this.router.navigate([url]);
         },
         error: (error) => {
           // Showing error toast

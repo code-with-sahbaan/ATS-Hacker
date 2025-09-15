@@ -2,6 +2,8 @@ import { Routes } from '@angular/router';
 import { SignIn } from './pages/sign-in/sign-in';
 import { ManageProfile } from './pages/manage-profile/manage-profile';
 import { Redirect } from './pages/redirect/redirect';
+import { CandidateMenu } from './components/candidate/candidate-menu/candidate-menu';
+import { Profile } from './pages/candidate/profile/profile';
 
 export const routes: Routes = [
     {
@@ -18,6 +20,20 @@ export const routes: Routes = [
         path:'authorize',
         component: Redirect,
         data: { title: 'Authorizing User' }
+    },
+
+    // Candidate Menus
+    { path: 'candidate', redirectTo: 'candidate/profile' },
+    {
+        path: 'candidate',
+        component: CandidateMenu,
+        children: [
+            {
+                path: 'profile',
+                component: Profile,
+                data: { title: 'Profile' }
+            }
+        ]
     }
 
 ];

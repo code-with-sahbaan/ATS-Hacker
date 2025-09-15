@@ -1,6 +1,7 @@
 package code.with.sahbaan.neohire.Services;
 
 import code.with.sahbaan.neohire.Entities.Users;
+import code.with.sahbaan.neohire.RequestDTO.UpdateUserRequest;
 import code.with.sahbaan.neohire.ResponseDTO.BaseResponse;
 import code.with.sahbaan.neohire.ResponseDTO.UserResponse;
 
@@ -15,4 +16,6 @@ public interface UserService {
     Users getCurrentlyLoggedUser() throws Exception;
 
     BaseResponse<UserResponse> getUserDetails() throws Exception;
+
+    BaseResponse<UserResponse> updateUserDetails(UpdateUserRequest updateUserRequest) throws Exception;
 }

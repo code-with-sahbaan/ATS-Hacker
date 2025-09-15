@@ -1,6 +1,7 @@
 package code.with.sahbaan.neohire.Controllers.v1;
 
 import code.with.sahbaan.neohire.Entities.Users;
+import code.with.sahbaan.neohire.RequestDTO.UpdateUserRequest;
 import code.with.sahbaan.neohire.ResponseDTO.BaseResponse;
 import code.with.sahbaan.neohire.ResponseDTO.UserResponse;
 import code.with.sahbaan.neohire.Services.UserService;
@@ -8,9 +9,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 @RestController
 @Slf4j
@@ -23,5 +22,10 @@ public class UserController {
     @GetMapping("getUserDetails")
     public ResponseEntity<BaseResponse<UserResponse>> getUserDetails() throws Exception {
         return new ResponseEntity<>(userService.getUserDetails(), HttpStatus.OK);
+    }
+
+    @PostMapping("updateUserDetails")
+    public ResponseEntity<BaseResponse<UserResponse>> updateUserDetails(@RequestBody UpdateUserRequest updateUserRequest) throws Exception {
+        return new ResponseEntity<>(userService.updateUserDetails(updateUserRequest), HttpStatus.OK);
     }
 }

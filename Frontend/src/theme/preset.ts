@@ -36,4 +36,33 @@ export const MyPreset = definePreset(Aura, {
       },
     },
   },
+  components: {
+    menubar: {
+      root: {
+        background: '{primary.950}',
+        borderRadius: '17px',
+        color: THEME_SECONDARY_COLOR,
+        padding: '1rem 2rem',
+        borderColor: 'transparent' 
+      },
+      item:{
+        color: THEME_SECONDARY_COLOR,
+        focusColor: '{primary.950}',
+        focusBackground: THEME_SECONDARY_COLOR,
+        activeColor: '{primary.950}',
+        activeBackground: THEME_SECONDARY_COLOR,
+        icon: {
+          color: THEME_SECONDARY_COLOR,
+          activeColor: '{primary.950}',
+          focusColor: '{primary.950}'
+        },
+        borderRadius: '7px',
+      },
+      baseItem:{padding: '10px 20px'},
+      submenu:{
+        background: '{primary.950}',
+        padding: '10px 20px'
+      }
+    },
+  },
 });

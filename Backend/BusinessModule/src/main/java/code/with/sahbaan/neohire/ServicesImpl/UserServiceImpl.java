@@ -2,6 +2,7 @@ package code.with.sahbaan.neohire.ServicesImpl;
 
 import code.with.sahbaan.neohire.Entities.Users;
 import code.with.sahbaan.neohire.Repositories.UserRepository;
+import code.with.sahbaan.neohire.RequestDTO.UpdateUserRequest;
 import code.with.sahbaan.neohire.ResponseDTO.BaseResponse;
 import code.with.sahbaan.neohire.ResponseDTO.UserResponse;
 import code.with.sahbaan.neohire.Services.UserService;
@@ -54,5 +55,13 @@ public class UserServiceImpl implements UserService {
         }catch(Exception e){
             throw new Exception("Failed to get User Details");
         }
+    }
+
+    @Override
+    public BaseResponse<UserResponse> updateUserDetails(UpdateUserRequest updateUserRequest) throws Exception {
+        Users users = getCurrentlyLoggedUser();
+        BeanUtils.copyProperties(updateUserRequest, users);
+        saveOrUpdate(users);
+        return getUserDetails();
     }
 }

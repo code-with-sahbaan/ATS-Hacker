@@ -43,8 +43,10 @@ public class Users {
     @Column(name = "COUNTRY")
     private String country;
 
+    @ElementCollection
+    @CollectionTable(name = "USER_SKILLS", joinColumns = @JoinColumn(name = "USER_ID"))
     @Column(name = "SKILLS")
-    private String skills;
+    private Set<String> skills;
 
     @OneToMany(mappedBy = "candidate", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     private Set<Experience> experiences = new HashSet<>();
