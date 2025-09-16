@@ -28,3 +28,10 @@
 :host ::ng-deep .p-button{
   padding: 10px !important;
 }
+
+/* app.component.css */
+a.active {
+  background: var(--primary-color);
+  border-radius: 7px;
+  color: black;
+}

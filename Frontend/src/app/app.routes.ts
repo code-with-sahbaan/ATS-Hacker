@@ -4,6 +4,7 @@ import { ManageProfile } from './pages/manage-profile/manage-profile';
 import { Redirect } from './pages/redirect/redirect';
 import { CandidateMenu } from './components/candidate/candidate-menu/candidate-menu';
 import { Profile } from './pages/candidate/profile/profile';
+import { Home } from './pages/candidate/home/home';
 
 export const routes: Routes = [
     {
@@ -23,11 +24,16 @@ export const routes: Routes = [
     },
 
     // Candidate Menus
-    { path: 'candidate', redirectTo: 'candidate/profile' },
+    { path: 'candidate', redirectTo: 'candidate/home' },
     {
         path: 'candidate',
         component: CandidateMenu,
         children: [
+            {
+                path: 'home',
+                component: Home,
+                data: { title: 'Home' }
+            },
             {
                 path: 'profile',
                 component: Profile,
