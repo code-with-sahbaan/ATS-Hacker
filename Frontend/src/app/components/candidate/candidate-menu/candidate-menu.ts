@@ -30,11 +30,6 @@ export class CandidateMenu {
         routerLink: '/candidate/home',
       },
       {
-        label: 'Find Job',
-        icon: 'pi pi-briefcase',
-        routerLink: '/candidate/profile'
-      },
-      {
         label: 'Practice with AI Interview',
         icon: 'pi pi-microchip-ai',
         routerLink: '/candidate/AiInterview'
