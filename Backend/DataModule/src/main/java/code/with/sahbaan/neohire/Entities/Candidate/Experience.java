@@ -25,10 +25,10 @@ public class Experience {
     @Column(name = "ROLE_DESCRIPTION", length = 65535)
     private String roleDescription;
 
-    @Column(name = "FROM")
+    @Column(name = "FROM_DATE")
     private LocalDate from;
 
-    @Column(name = "TO")
+    @Column(name = "TO_DATE")
     private LocalDate to;
 
     @ManyToOne

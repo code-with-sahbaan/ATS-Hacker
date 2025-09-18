@@ -28,10 +28,10 @@ public class Education {
     @Column(name = "LEVEL")
     private String level;
 
-    @Column(name = "FROM")
+    @Column(name = "FROM_DATE")
     private LocalDate from;
 
-    @Column(name = "TO")
+    @Column(name = "TO_DATE")
     private LocalDate to;
 
     @Column(name = "CURRENTLY_ATTENDING")

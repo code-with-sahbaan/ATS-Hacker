@@ -1,7 +1,7 @@
 import { environment } from "../../environments/environment";
 
 const APP_URL = environment.app_url;
-export const MAX_FILE_SIZE = 1073741824;
+export const MAX_FILE_SIZE = 26214400; // 25 MB
 export const ROLE_CANDIDATE = "CANDIDATE";
 export const ROLE_RECRUITER = "RECRUITER";
 
@@ -29,5 +29,5 @@ export function getHomePageRedirection(user: any) {
 
 export function logout() {
     localStorage.clear();
-    window.location.href = APP_URL + "user/logout";
+    window.location.href = environment.apiUrl + "/user/logout";
 }

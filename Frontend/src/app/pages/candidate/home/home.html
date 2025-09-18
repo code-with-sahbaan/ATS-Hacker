@@ -1,14 +1,25 @@
 <div class="grid grid-nogutter w-full h-full gap-4">
     <p-card header="Resume Highlights" class="col-12 xl:col-3">
+
+        @if (resumeLoading) {
+        <div>
+            <p-skeleton class="mb-2" />
+            <p-skeleton width="10rem" class="mb-2" />
+            <p-skeleton width="5rem" class="mb-2" />
+            <p-skeleton height="2rem" class="mb-2" />
+        </div>
+        }@else{
         <p class="mb-3 mt-3">
-            Last Updated:
+            Last Updated: {{resumeDetails?.lastUpdated}}
         </p>
-         <p class="mb-3">
-            Resume Name:
-         </p>
-        <p-fileupload name="resume[]" (onSelect)="onUpload($event)"
-            [multiple]="false" accept=".pdf" mode="basic">
+        <p class="mb-3">
+            Resume Name: <a href="{{resumeDetails?.resumeUrl}}" target="_blank"
+                rel="noopener noreferrer">{{resumeDetails?.resumeName}}</a>
+        </p>
+        <p-fileupload name="resume[]" (onSelect)="onUpload($event)" [multiple]="false" accept=".pdf" mode="basic"
+            maxFileSize="26214400">
         </p-fileupload>
+        }
     </p-card>
 
     <p-card header="Simple Card" class="col-12 xl:col-8">

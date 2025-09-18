@@ -8,6 +8,7 @@ import code.with.sahbaan.neohire.ResponseDTO.Candidate.ResumeResponse;
 import code.with.sahbaan.neohire.Services.MediaService;
 import code.with.sahbaan.neohire.Services.ResumeService;
 import code.with.sahbaan.neohire.Services.UserService;
+import jakarta.transaction.Transactional;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -31,7 +32,13 @@ public class ResumeServiceImpl implements ResumeService {
     public BaseResponse<ResumeResponse> updateResume(MultipartFile file) throws Exception{
         try{
             Users users = userService.getCurrentlyLoggedUser();
-            Resume resume = new  Resume();
+            Resume resume;
+            Optional<Resume> resumeOptional = resumeRepository.findByCandidate(users);
+            if(resumeOptional.isPresent()){
+                resume = resumeOptional.get();
+            }else{
+                resume = new Resume();
+            }
             resume.setCandidate(users);
             resume.setResumeName(file.getOriginalFilename());
             resume.setResumeUrl(mediaService.uploadFile(file));
@@ -49,7 +56,7 @@ public class ResumeServiceImpl implements ResumeService {
             ResumeResponse resumeResponse = new ResumeResponse();
             Optional<Resume> resume = resumeRepository.findByCandidate(users);
             if (resume.isPresent()) {
-                BeanUtils.copyProperties(resume, resumeResponse);
+                BeanUtils.copyProperties(resume.get(), resumeResponse);
             }else{
                 resumeResponse.setResumeName("--");
                 resumeResponse.setResumeUrl("--");
