@@ -2,6 +2,7 @@ package code.with.sahbaan.neohire.Entities;
 
 import code.with.sahbaan.neohire.Entities.Candidate.Education;
 import code.with.sahbaan.neohire.Entities.Candidate.Experience;
+import code.with.sahbaan.neohire.Entities.Candidate.Resume;
 import jakarta.persistence.*;
 import lombok.*;
 
@@ -53,5 +54,8 @@ public class Users {
 
     @OneToMany(mappedBy = "candidate", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     private Set<Education> educations = new HashSet<>();
+
+    @OneToOne(mappedBy = "candidate", cascade = CascadeType.ALL)
+    private Resume resume;
 
 }

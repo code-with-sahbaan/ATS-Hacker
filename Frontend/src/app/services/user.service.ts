@@ -24,7 +24,7 @@ export class UserService {
   public currentUser: User | undefined;
 
   getUserDetails(): Observable<any> {
-    return this.http.get('/user/getUserDetails').pipe();
+    return this.http.get('/user/v1/getUserDetails').pipe();
   }
 
 }

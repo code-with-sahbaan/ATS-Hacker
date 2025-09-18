@@ -35,3 +35,7 @@ a.active {
   border-radius: 7px;
   color: black;
 }
+
+:host ::ng-deep .p-menu-overlay{
+  right:0 !important;
+}

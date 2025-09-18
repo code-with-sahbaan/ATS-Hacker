@@ -96,6 +96,7 @@ public class WebConfiguration {
 
         http.authorizeHttpRequests(request -> {
             request.requestMatchers("/user/**").hasAnyRole(Constants.ROLE_CANDIDATE, Constants.ROLE_RECRUITER);
+            request.requestMatchers("/user/**").hasRole(Constants.ROLE_CANDIDATE);
         });
 
         http.authorizeHttpRequests(request -> {

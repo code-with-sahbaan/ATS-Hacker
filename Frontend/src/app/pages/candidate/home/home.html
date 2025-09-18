@@ -1,11 +1,17 @@
 <div class="grid grid-nogutter w-full h-full gap-4">
-    <p-card header="Resume Highlights" class="w-3">
-        <p class="m-0">
-            Last Updated: 
+    <p-card header="Resume Highlights" class="col-12 xl:col-3">
+        <p class="mb-3 mt-3">
+            Last Updated:
         </p>
+         <p class="mb-3">
+            Resume Name:
+         </p>
+        <p-fileupload name="resume[]" (onSelect)="onUpload($event)"
+            [multiple]="false" accept=".pdf" mode="basic">
+        </p-fileupload>
     </p-card>
 
-    <p-card header="Simple Card" class="w-8">
+    <p-card header="Simple Card" class="col-12 xl:col-8">
         <p class="m-0">
             Lorem ipsum dolor sit amet...
         </p>

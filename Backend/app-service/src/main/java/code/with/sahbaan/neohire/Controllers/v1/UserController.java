@@ -13,7 +13,7 @@ import org.springframework.web.bind.annotation.*;
 
 @RestController
 @Slf4j
-@RequestMapping("user")
+@RequestMapping("user/v1")
 public class UserController {
 
     @Autowired
