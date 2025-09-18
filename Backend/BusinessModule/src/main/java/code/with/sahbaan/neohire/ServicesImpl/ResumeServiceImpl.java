@@ -6,6 +6,7 @@ import code.with.sahbaan.neohire.Repositories.Candidate.ResumeRepository;
 import code.with.sahbaan.neohire.ResponseDTO.BaseResponse;
 import code.with.sahbaan.neohire.ResponseDTO.Candidate.ResumeResponse;
 import code.with.sahbaan.neohire.Services.MediaService;
+import code.with.sahbaan.neohire.Services.RagService;
 import code.with.sahbaan.neohire.Services.ResumeService;
 import code.with.sahbaan.neohire.Services.UserService;
 import jakarta.transaction.Transactional;
@@ -28,6 +29,9 @@ public class ResumeServiceImpl implements ResumeService {
     @Autowired
     private MediaService mediaService;
 
+    @Autowired
+    private RagService ragService;
+
     @Override
     public BaseResponse<ResumeResponse> updateResume(MultipartFile file) throws Exception{
         try{
@@ -42,7 +46,8 @@ public class ResumeServiceImpl implements ResumeService {
             resume.setCandidate(users);
             resume.setResumeName(file.getOriginalFilename());
             resume.setResumeUrl(mediaService.uploadFile(file));
-            resumeRepository.save(resume);
+            Resume saved = resumeRepository.save(resume);
+            ragService.ingestResumeFromPdf(file, users.getEmail(), saved.getResumeId());
             return getResumeDetails();
         }catch(Exception e){
             throw new Exception("Failed to update resume");
@@ -62,7 +67,7 @@ public class ResumeServiceImpl implements ResumeService {
                 resumeResponse.setResumeUrl("--");
                 resumeResponse.setLastUpdated(null);
             }
-            return new BaseResponse<>("Resume Updated Successfully", resumeResponse);
+            return new BaseResponse<>("Resume Details Fetched Successfully", resumeResponse);
         }catch(Exception e){
             throw new  Exception("Failed to get Resume Details");
         }

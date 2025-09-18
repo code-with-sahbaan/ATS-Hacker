@@ -38,9 +38,8 @@ public class UserServiceImpl implements UserService {
     @Override
     public Users getCurrentlyLoggedUser() throws Exception {
         try{
-            CustomUserPrincipal customUserPrincipal = (CustomUserPrincipal) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-            Users users = customUserPrincipal.getUser();
-            return findByEmail(users.getEmail()).get();
+            String email = SecurityContextHolder.getContext().getAuthentication().getName();
+            return findByEmail(email).get();
         }catch(Exception e){
             throw new  Exception("Failed to get Users");
         }

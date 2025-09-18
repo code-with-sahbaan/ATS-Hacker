@@ -8,7 +8,7 @@ import {
 } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable, tap } from 'rxjs';
-import { logout } from '../utils/common.util';
+import { getJWTtoken, logout } from '../utils/common.util';
 import { environment } from '../../environments/environment';
 
 @Injectable()
@@ -19,9 +19,11 @@ export class HttpConfigInterceptor implements HttpInterceptor {
   ): Observable<HttpEvent<any>> {
     // 🔐 Add headers (e.g., auth token)
     const modifiedReq = req.clone({
-      withCredentials: true,
-      url: `${environment.apiUrl}${req.url}`
-    })
+      setHeaders: {
+        Authorization: `Bearer ${getJWTtoken()}`,
+      },
+      url: `${environment.apiUrl}${req.url}`,
+    });
     return next.handle(modifiedReq).pipe(
       tap({
         next: (event) => {
@@ -31,7 +33,7 @@ export class HttpConfigInterceptor implements HttpInterceptor {
         },
         error: (error: HttpErrorResponse) => {
           // If token expires or never logged in
-          if ((error.status === 403 || error.status === 0) && req.url != "/user/getUserDetails") {
+          if (error.status === 403 && req.url != "/user/getUserDetails") {
             logout();
           }
         },

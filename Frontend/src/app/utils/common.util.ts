@@ -29,5 +29,5 @@ export function getHomePageRedirection(user: any) {
 
 export function logout() {
     localStorage.clear();
-    window.location.href = environment.apiUrl + "/user/logout";
+    window.location.href = APP_URL;
 }

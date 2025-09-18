@@ -1,9 +1,9 @@
 import { Component, OnInit } from '@angular/core';
-import { UserService } from '../../services/user.service';
+import { User, UserService } from '../../services/user.service';
 import { UiService } from '../../services/ui.service';
 import { finalize } from 'rxjs';
 import { environment } from '../../../environments/environment';
-import { getHomePageRedirection } from '../../utils/common.util';
+import { getHomePageRedirection, getJWTtoken } from '../../utils/common.util';
 import { Router } from '@angular/router';
 
 @Component({
@@ -14,9 +14,27 @@ import { Router } from '@angular/router';
 })
 export class Redirect implements OnInit {
 
-  constructor(public userService: UserService, public uiService: UiService, public router: Router){}
+  user: User = {
+    email: '',
+    name: '',
+    pictureUrl: '',
+    provider: '', // GOOGLE, GITHUB, etc.
+    role: '',
+    city: '',
+    country: '',
+    skills: [],
+    accessToken: ''
+  }
+
+  constructor(public userService: UserService, public uiService: UiService, public router: Router) { }
 
   ngOnInit(): void {
+    const urlParams = new URLSearchParams(window.location.search);
+    const token = urlParams.get('token');
+    if (token) {
+      this.user.accessToken = token;
+      localStorage.setItem("USER", JSON.stringify(this.user));
+    }
     setTimeout(() => this.performRedirect(), 0);
   }
 
@@ -35,6 +53,10 @@ export class Redirect implements OnInit {
           // Showing success Toast
           this.uiService.showSuccess(response.responseMessage);
           const body = response.responseBody;
+          const token = getJWTtoken();
+          this.user = body;
+          this.user.accessToken = token;
+          localStorage.setItem("USER", JSON.stringify(this.user));
           this.userService.currentUser = body;
           const url = getHomePageRedirection(body);
           this.router.navigate([url]);

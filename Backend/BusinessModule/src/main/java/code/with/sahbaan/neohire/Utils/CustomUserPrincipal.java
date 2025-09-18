@@ -12,11 +12,14 @@ public class CustomUserPrincipal implements OAuth2User {
 
     @Getter
     private final Users user;
+    @Getter
+    private final String accessToken;
     private final Map<String, Object> attributes;
 
-    public CustomUserPrincipal(Users user, Map<String, Object> attributes) {
+    public CustomUserPrincipal(Users user, Map<String, Object> attributes, String accessToken) {
         this.user = user;
         this.attributes = attributes;
+        this.accessToken = accessToken;
     }
 
     @Override

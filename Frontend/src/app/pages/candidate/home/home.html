@@ -13,8 +13,8 @@
             Last Updated: {{resumeDetails?.lastUpdated}}
         </p>
         <p class="mb-3">
-            Resume Name: <a href="{{resumeDetails?.resumeUrl}}" target="_blank"
-                rel="noopener noreferrer">{{resumeDetails?.resumeName}}</a>
+            <a href="{{resumeDetails?.resumeUrl}}" target="_blank"
+                rel="noopener noreferrer"><p-chip label="{{resumeDetails?.resumeName}}" /></a>
         </p>
         <p-fileupload name="resume[]" (onSelect)="onUpload($event)" [multiple]="false" accept=".pdf" mode="basic"
             maxFileSize="26214400">

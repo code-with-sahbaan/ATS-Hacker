@@ -11,7 +11,8 @@ export interface User{
     role: string,
     city: string,
     country: string,
-    skills: string[];
+    skills: string[],
+    accessToken: string
 }
 
 @Injectable({

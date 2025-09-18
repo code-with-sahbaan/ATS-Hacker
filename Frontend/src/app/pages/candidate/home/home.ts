@@ -6,10 +6,11 @@ import { MAX_FILE_SIZE } from '../../../utils/common.util';
 import { Resume, ResumeService } from '../../../services/resume.service';
 import { finalize } from 'rxjs';
 import { Skeleton } from 'primeng/skeleton';
+import { ChipModule } from 'primeng/chip';
 
 @Component({
   selector: 'app-home',
-  imports: [CardModule, FileUpload, Skeleton],
+  imports: [CardModule, FileUpload, Skeleton, ChipModule],
   templateUrl: './home.html',
   styleUrl: './home.css'
 })

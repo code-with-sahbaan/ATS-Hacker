@@ -1,6 +1,7 @@
 package code.with.sahbaan.neohire.ServicesImpl;
 
 import code.with.sahbaan.neohire.Services.CustomOAuth2UserService;
+import code.with.sahbaan.neohire.Services.JwtService;
 import code.with.sahbaan.neohire.Services.UserService;
 import code.with.sahbaan.neohire.Entities.Users;
 import code.with.sahbaan.neohire.Utils.Constants;
@@ -18,6 +19,9 @@ public class CustomOAuth2UserServiceImpl extends DefaultOAuth2UserService implem
 
     @Autowired
     private UserService userService;
+
+    @Autowired
+    private JwtService jwtService;
 
     @Override
     public OAuth2User loadUser(OAuth2UserRequest userRequest) {
@@ -41,8 +45,10 @@ public class CustomOAuth2UserServiceImpl extends DefaultOAuth2UserService implem
                         .build();
                 userService.saveOrUpdate(users);
             }
+            Users users = userService.findByEmail(email).get();
+            String accessToken = jwtService.generateToken(users);
 
-            return new CustomUserPrincipal(userService.findByEmail(email).get(), oAuth2User.getAttributes());
+            return new CustomUserPrincipal(users, oAuth2User.getAttributes(), accessToken);
         }catch (Exception e){
             return null;
         }

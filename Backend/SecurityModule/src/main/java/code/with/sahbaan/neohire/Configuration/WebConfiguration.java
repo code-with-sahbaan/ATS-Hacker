@@ -1,7 +1,7 @@
 package code.with.sahbaan.neohire.Configuration;
 
-import code.with.sahbaan.neohire.Services.CustomOAuth2UserService;
 import code.with.sahbaan.neohire.ServicesImpl.CustomOAuth2UserServiceImpl;
+import code.with.sahbaan.neohire.ServicesImpl.CustomOAuth2AuthenticationSuccessHandler;
 import code.with.sahbaan.neohire.Utils.Constants;
 import code.with.sahbaan.neohire.Utils.FilterUtil;
 import lombok.RequiredArgsConstructor;
@@ -10,12 +10,11 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.http.HttpStatus;
-import org.springframework.security.access.AccessDeniedException;
+import org.springframework.security.config.Customizer;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configurers.AbstractHttpConfigurer;
 import org.springframework.security.config.http.SessionCreationPolicy;
-import org.springframework.security.core.AuthenticationException;
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.web.cors.CorsConfiguration;
 import org.springframework.web.cors.CorsConfigurationSource;
@@ -31,8 +30,10 @@ import java.util.Set;
 public class WebConfiguration {
 
     @Autowired
-    private final CustomOAuth2UserServiceImpl customOAuth2UserService;
+    private CustomOAuth2UserServiceImpl customOAuth2UserService;
 
+    @Autowired
+    private CustomOAuth2AuthenticationSuccessHandler customOAuth2AuthenticationSuccessHandler;
 
     @Value("${cors.allowed.origins}")
     private String originAllowed;
@@ -40,15 +41,12 @@ public class WebConfiguration {
     @Value("${public.urls}")
     private Set<String> publicUrls;
 
-
-
     @Bean
     CorsConfigurationSource corsConfigurationSource() {
         CorsConfiguration config = new CorsConfiguration();
         config.setAllowedOrigins(List.of(originAllowed));
-        config.setAllowedHeaders(List.of("*"));
+        config.setAllowedHeaders(List.of("Authorization", "Content-Type"));
         config.setAllowedMethods(List.of("GET", "POST", "PUT", "DELETE", "OPTIONS"));
-        config.setAllowCredentials(true);
         UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
         source.registerCorsConfiguration("/**", config);
         return source;
@@ -70,14 +68,22 @@ public class WebConfiguration {
                 response.addHeader("Access-Control-Allow-Credentials", "true");
             });
         });
-        http.sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.IF_REQUIRED));
+        http.sessionManagement(session ->
+                session.sessionCreationPolicy(SessionCreationPolicy.STATELESS)
+        );
 
         http.oauth2Login(oauth ->
         {
             oauth.userInfoEndpoint(info -> {
                info.userService(customOAuth2UserService);
             });
-           oauth.defaultSuccessUrl(originAllowed + "/" + "authorize", true);
+            oauth.successHandler((request, response, authentication) -> {
+                customOAuth2AuthenticationSuccessHandler.onAuthenticationSuccess(request, response, authentication);
+            });
+        });
+
+        http.oauth2ResourceServer(oauth ->{
+           oauth.jwt(Customizer.withDefaults());
         });
 
         http
@@ -95,8 +101,8 @@ public class WebConfiguration {
         });
 
         http.authorizeHttpRequests(request -> {
-            request.requestMatchers("/user/**").hasAnyRole(Constants.ROLE_CANDIDATE, Constants.ROLE_RECRUITER);
-            request.requestMatchers("/user/**").hasRole(Constants.ROLE_CANDIDATE);
+            request.requestMatchers("/user/**").hasAnyAuthority(Constants.ROLE_CANDIDATE, Constants.ROLE_RECRUITER);
+            request.requestMatchers("/resume/**").hasAuthority(Constants.ROLE_CANDIDATE);
         });
 
         http.authorizeHttpRequests(request -> {

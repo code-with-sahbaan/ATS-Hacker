@@ -6,6 +6,7 @@ import { Menubar } from 'primeng/menubar';
 import { Menu } from 'primeng/menu';
 import { ButtonModule } from 'primeng/button';
 
+
 @Component({
   selector: 'app-candidate-menu',
   imports: [Menubar, RouterOutlet, CommonModule, Menu, ButtonModule, RouterLink],
