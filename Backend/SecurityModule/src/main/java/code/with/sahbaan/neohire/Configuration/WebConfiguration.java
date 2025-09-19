@@ -1,7 +1,7 @@
 package code.with.sahbaan.neohire.Configuration;
 
-import code.with.sahbaan.neohire.ServicesImpl.CustomOAuth2UserServiceImpl;
-import code.with.sahbaan.neohire.ServicesImpl.CustomOAuth2AuthenticationSuccessHandler;
+import code.with.sahbaan.neohire.Utils.CustomOAuth2UserServiceImpl;
+import code.with.sahbaan.neohire.Utils.CustomOAuth2AuthenticationSuccessHandler;
 import code.with.sahbaan.neohire.Utils.Constants;
 import code.with.sahbaan.neohire.Utils.FilterUtil;
 import lombok.RequiredArgsConstructor;
@@ -92,7 +92,7 @@ public class WebConfiguration {
                      FilterUtil.writeErrorResponse(res, "Session Expired", HttpStatus.FORBIDDEN.value());
                  })
                  .accessDeniedHandler((req, res, e) -> {
-                      FilterUtil.writeErrorResponse(res, "Session Expired", HttpStatus.UNAUTHORIZED.value());
+                      FilterUtil.writeErrorResponse(res, "Session Expired", HttpStatus.FORBIDDEN.value());
                  })
         );
 

@@ -1,11 +1,8 @@
-package code.with.sahbaan.neohire.ServicesImpl;
+package code.with.sahbaan.neohire.Utils;
 
-import code.with.sahbaan.neohire.Services.CustomOAuth2UserService;
 import code.with.sahbaan.neohire.Services.JwtService;
 import code.with.sahbaan.neohire.Services.UserService;
 import code.with.sahbaan.neohire.Entities.Users;
-import code.with.sahbaan.neohire.Utils.Constants;
-import code.with.sahbaan.neohire.Utils.CustomUserPrincipal;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.oauth2.client.userinfo.DefaultOAuth2UserService;
@@ -15,7 +12,7 @@ import org.springframework.stereotype.Service;
 
 @Service
 @Slf4j
-public class CustomOAuth2UserServiceImpl extends DefaultOAuth2UserService implements CustomOAuth2UserService {
+public class CustomOAuth2UserServiceImpl extends DefaultOAuth2UserService {
 
     @Autowired
     private UserService userService;

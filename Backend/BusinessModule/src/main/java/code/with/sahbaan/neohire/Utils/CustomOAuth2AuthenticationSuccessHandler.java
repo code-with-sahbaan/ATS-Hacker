@@ -1,6 +1,5 @@
-package code.with.sahbaan.neohire.ServicesImpl;
+package code.with.sahbaan.neohire.Utils;
 
-import code.with.sahbaan.neohire.Utils.CustomUserPrincipal;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;

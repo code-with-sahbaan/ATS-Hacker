@@ -7,6 +7,8 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.oauth2.jwt.JwtDecoder;
+import org.springframework.security.oauth2.jwt.JwtException;
+import org.springframework.security.oauth2.jwt.JwtValidationException;
 import org.springframework.security.oauth2.jwt.NimbusJwtDecoder;
 import org.springframework.security.oauth2.server.resource.authentication.JwtAuthenticationConverter;
 
@@ -28,9 +30,6 @@ public class AppConfigurations {
     @Value("${CLOUDINARY_API_SECRET}")
     private String apiSecret;
 
-    @Value("${security.secret}")
-    private String secret;
-
     @Bean
     Cloudinary cloudinary(){
         return new Cloudinary(ObjectUtils.asMap(
@@ -38,25 +37,6 @@ public class AppConfigurations {
                 "api_key", apiKey,
                 "api_secret", apiSecret
         ));
-    }
-
-    @Bean
-    public JwtDecoder jwtDecoder() {
-        SecretKey key = new SecretKeySpec(secret.getBytes(StandardCharsets.UTF_8), "HmacSHA256");
-        return NimbusJwtDecoder.withSecretKey(key).build();
-    }
-
-    @Bean
-    public JwtAuthenticationConverter jwtAuthenticationConverter() {
-        JwtAuthenticationConverter converter = new JwtAuthenticationConverter();
-        converter.setJwtGrantedAuthoritiesConverter(jwt -> {
-            List<String> roles = jwt.getClaimAsStringList("roles");
-            if (roles == null) return List.of();
-            return roles.stream()
-                    .map(SimpleGrantedAuthority::new)
-                    .collect(Collectors.toList());
-        });
-        return converter;
     }
 
 }
