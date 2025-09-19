@@ -1,10 +1,13 @@
 package code.with.sahbaan.neohire.Entities.Candidate;
 
+import code.with.sahbaan.neohire.Entities.Recruiter.ResumeJob;
 import code.with.sahbaan.neohire.Entities.Users;
 import jakarta.persistence.*;
 import lombok.*;
 
 import java.time.LocalDateTime;
+import java.util.HashSet;
+import java.util.Set;
 
 @Entity
 @Getter
@@ -30,6 +33,9 @@ public class Resume {
 
     @OneToOne
     private Users candidate;
+
+    @OneToMany(mappedBy = "resume", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+    Set<ResumeJob> resumeJobs = new HashSet<>();
 
     @PrePersist
     protected void onCreate() {

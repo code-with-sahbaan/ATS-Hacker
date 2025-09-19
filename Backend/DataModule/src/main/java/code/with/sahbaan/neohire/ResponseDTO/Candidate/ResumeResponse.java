@@ -1,5 +1,6 @@
 package code.with.sahbaan.neohire.ResponseDTO.Candidate;
 
+import code.with.sahbaan.neohire.Utils.Constants;
 import com.fasterxml.jackson.annotation.JsonFormat;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -18,6 +19,6 @@ public class ResumeResponse {
 
     private String resumeName;
 
-    @JsonFormat(pattern = "yyyy-MM-dd hh:mm a")
+    @JsonFormat(pattern = Constants.DATE_TIME_FORMAT)
     private LocalDateTime lastUpdated;
 }
