@@ -21,11 +21,13 @@ public class UserController {
 
     @GetMapping("getUserDetails")
     public ResponseEntity<BaseResponse<UserResponse>> getUserDetails() throws Exception {
+        log.info("Executing getUserDetails in UserController");
         return new ResponseEntity<>(userService.getUserDetails(), HttpStatus.OK);
     }
 
     @PostMapping("updateUserDetails")
     public ResponseEntity<BaseResponse<UserResponse>> updateUserDetails(@RequestBody UpdateUserRequest updateUserRequest) throws Exception {
+        log.info("Executing updateUserDetails in UserController");
         return new ResponseEntity<>(userService.updateUserDetails(updateUserRequest), HttpStatus.OK);
     }
 }

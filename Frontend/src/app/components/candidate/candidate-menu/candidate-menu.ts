@@ -34,6 +34,11 @@ export class CandidateMenu {
         label: 'Practice with AI Interview',
         icon: 'pi pi-microchip-ai',
         routerLink: '/candidate/AiInterview'
+      },
+      {
+        label: 'My Profile',
+        icon: 'pi pi-user',
+        routerLink: '/user/profile'
       }
     ];
 

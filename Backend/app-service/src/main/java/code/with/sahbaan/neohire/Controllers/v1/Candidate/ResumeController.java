@@ -1,6 +1,5 @@
 package code.with.sahbaan.neohire.Controllers.v1.Candidate;
 
-import code.with.sahbaan.neohire.RequestDTO.UpdateUserRequest;
 import code.with.sahbaan.neohire.ResponseDTO.BaseResponse;
 import code.with.sahbaan.neohire.ResponseDTO.Candidate.ResumeResponse;
 import code.with.sahbaan.neohire.Services.ResumeService;
@@ -21,11 +20,13 @@ public class ResumeController {
 
     @PostMapping("updateResume")
     public ResponseEntity<BaseResponse<ResumeResponse>> updateResume(@RequestParam("resume") MultipartFile resume) throws Exception {
+        log.info("Executing updateResume in ResumeController");
         return new ResponseEntity<>(resumeService.updateResume(resume), HttpStatus.OK);
     }
 
     @GetMapping("getResumeDetails")
     public ResponseEntity<BaseResponse<ResumeResponse>> getResumeDetails() throws Exception {
+        log.info("Executing getResumeDetails in ResumeController");
         return new ResponseEntity<>(resumeService.getResumeDetails(), HttpStatus.OK);
     }
 }
