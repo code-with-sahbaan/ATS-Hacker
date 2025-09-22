@@ -5,13 +5,26 @@ Neo Hire helps recruiters streamline hiring by leveraging **LLMs** and **vector 
 
 ---
 
-## 📌 Features (v0.1)
-- 🔹 Resume parsing (PDF/DOCX → structured JSON).
-- 🔹 Job & candidate management.
-- 🔹 AI-powered semantic search for candidates.
-- 🔹 RAG-based candidate-job recommendations.
-- 🔹 Secure authentication & role-based access control.
-- 🔹 Modern Angular frontend with PrimeNG.
+## 🚀 Version 01 – Core Features
+
+1. **Unified Account (Dual Profile Switching)**
+   - One account can act as **Recruiter** or **Candidate**.
+   - Users can **switch profiles** via the profile page without separate logins.
+
+2. **AI Interview (Practice Mode for Candidates)**
+   - Candidates can practice with an **AI Interviewer**.
+   - Realistic Q&A using **speech-to-text** and **text-to-speech**.
+   - Feedback is generated to improve performance.
+
+3. **AI-Powered Job Recommendations**
+   - Candidates upload resumes (PDF/Doc).
+   - NeoHire generates embeddings of resumes.
+   - RAG AI recommends the **most relevant jobs**.
+
+4. **AI-Powered Resume Recommendations**
+   - Recruiters post job descriptions.
+   - NeoHire generates embeddings of job descriptions.
+   - RAG AI recommends **the most suitable resumes**.
 
 ---
 
@@ -35,3 +48,11 @@ flowchart TD
     B --> C[Spring AI + RAG Engine]
     C --> D[(PostgreSQL + pgVector)]
     B --> F[Email Notification Services]
+
+---
+
+## 🌟 Roadmap (Future Versions)
+
+- **V02:** Analytics dashboard for recruiters & candidates  
+- **V03:** Real-time interview scheduling & recruiter–candidate chat  
+- **V04:** Advanced recruiter AI assistant for job market insights  
