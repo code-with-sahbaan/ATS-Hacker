@@ -51,7 +51,7 @@ flowchart TD
 
 ---
 
-## 🌟 Roadmap (Future Versions)
+## 🗺️ Roadmap (Future Versions)
 
 - **V02:** Analytics dashboard for recruiters & candidates  
 - **V03:** Real-time interview scheduling & recruiter–candidate chat  
