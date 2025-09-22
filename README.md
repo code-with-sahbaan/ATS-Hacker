@@ -48,11 +48,3 @@ flowchart TD
     B --> C[Spring AI + RAG Engine]
     C --> D[(PostgreSQL + pgVector)]
     B --> F[Email Notification Services]
-
----
-
-## 🗺️ Roadmap (Future Versions)
-
-- **V02:** Analytics dashboard for recruiters & candidates  
-- **V03:** Real-time interview scheduling & recruiter–candidate chat  
-- **V04:** Advanced recruiter AI assistant for job market insights  
