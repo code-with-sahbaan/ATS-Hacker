@@ -3,13 +3,12 @@ import { Component } from '@angular/core';
 import { NavigationEnd, Router, RouterLink, RouterOutlet } from '@angular/router';
 import { MenuItem } from 'primeng/api';
 import { Menubar } from 'primeng/menubar';
-import { Menu } from 'primeng/menu';
 import { ButtonModule } from 'primeng/button';
 
 
 @Component({
   selector: 'app-candidate-menu',
-  imports: [Menubar, RouterOutlet, CommonModule, Menu, ButtonModule, RouterLink],
+  imports: [Menubar, RouterOutlet, CommonModule, ButtonModule, RouterLink],
   templateUrl: './candidate-menu.html',
   styleUrl: './candidate-menu.css'
 })
@@ -38,7 +37,7 @@ export class CandidateMenu {
       {
         label: 'My Profile',
         icon: 'pi pi-user',
-        routerLink: '/user/profile'
+        routerLink: '/candidate/profile'
       }
     ];
 
