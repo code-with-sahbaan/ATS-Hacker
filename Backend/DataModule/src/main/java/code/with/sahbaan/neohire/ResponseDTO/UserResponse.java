@@ -10,10 +10,7 @@ import java.util.Set;
 public class UserResponse {
 
     private String name;
-    private String email;
     private String role;
-    private String pictureUrl;
     private String city;
     private String country;
-    private Set<String> skills;
 }

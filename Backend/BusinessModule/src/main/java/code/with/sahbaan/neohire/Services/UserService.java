@@ -18,4 +18,6 @@ public interface UserService {
     BaseResponse<UserResponse> getUserDetails() throws Exception;
 
     BaseResponse<UserResponse> updateUserDetails(UpdateUserRequest updateUserRequest) throws Exception;
+
+    BaseResponse<String> switchProfile() throws Exception;
 }

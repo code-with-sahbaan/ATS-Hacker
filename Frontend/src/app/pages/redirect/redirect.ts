@@ -15,14 +15,10 @@ import { Router } from '@angular/router';
 export class Redirect implements OnInit {
 
   user: User = {
-    email: '',
     name: '',
-    pictureUrl: '',
-    provider: '', // GOOGLE, GITHUB, etc.
     role: '',
     city: '',
     country: '',
-    skills: [],
     accessToken: ''
   }
 

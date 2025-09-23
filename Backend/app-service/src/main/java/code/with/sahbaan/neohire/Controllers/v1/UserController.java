@@ -5,8 +5,10 @@ import code.with.sahbaan.neohire.RequestDTO.UpdateUserRequest;
 import code.with.sahbaan.neohire.ResponseDTO.BaseResponse;
 import code.with.sahbaan.neohire.ResponseDTO.UserResponse;
 import code.with.sahbaan.neohire.Services.UserService;
+import jakarta.servlet.http.HttpServletResponse;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -29,5 +31,11 @@ public class UserController {
     public ResponseEntity<BaseResponse<UserResponse>> updateUserDetails(@RequestBody UpdateUserRequest updateUserRequest) throws Exception {
         log.info("Executing updateUserDetails in UserController");
         return new ResponseEntity<>(userService.updateUserDetails(updateUserRequest), HttpStatus.OK);
+    }
+
+    @GetMapping("switchProfile")
+    public ResponseEntity<BaseResponse<String>> switchProfile() throws Exception {
+        log.info("Executing switchProfile in UserController");
+        return new ResponseEntity<>(userService.switchProfile(), HttpStatus.OK);
     }
 }
