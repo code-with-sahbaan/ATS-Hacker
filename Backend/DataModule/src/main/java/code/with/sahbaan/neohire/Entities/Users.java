@@ -19,6 +19,10 @@ import java.util.Set;
 @Table(name = "USERS")
 public class Users {
 
+    /*
+    * GENERAL FIELDS FOR ALL TYPE OF USERS
+    * */
+
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     @Column(name = "USER_ID")
@@ -45,10 +49,14 @@ public class Users {
     @Column(name = "COUNTRY")
     private String country;
 
+    /*
+     * CANDIDATE SPECIFIC FIELDS
+     * */
+
     @ElementCollection
-    @CollectionTable(name = "USER_SKILLS", joinColumns = @JoinColumn(name = "USER_ID"))
-    @Column(name = "SKILLS")
-    private Set<String> skills;
+    @CollectionTable(name = "USER_RECOMMENDED_JOBS", joinColumns = @JoinColumn(name = "USER_ID"))
+    @Column(name = "RECOMMENDED_JOBS")
+    private Set<Long> recommendedJobIds;
 
     @OneToMany(mappedBy = "candidate", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     private Set<Experience> experiences = new HashSet<>();
@@ -58,6 +66,10 @@ public class Users {
 
     @OneToOne(mappedBy = "candidate", cascade = CascadeType.ALL)
     private Resume resume;
+
+    /*
+     * RECRUITER SPECIFIC FIELDS
+     * */
 
     @OneToMany(mappedBy = "recruiter", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     private Set<Job> jobs = new HashSet<>();

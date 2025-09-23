@@ -1,1 +1,42 @@
-<p>profile works!</p>
+<form [formGroup]="updateProfileForm" (ngSubmit)="onSubmit()" class="h-full grid grid-nogutter gap-4">
+    <div class="col-3 flex flex-column gap-3">
+        @if ( getFormControls['name'].touched) {
+        <small class="p-error">
+            @if (getFormControls['name'].errors?.['required']) {
+            <p-message severity="error" variant="simple" size="small">Name is required</p-message>
+            }
+        </small>
+        }
+        <label for="name">Full Name</label>
+        <input pInputText id="name" maxlength="255" aria-describedby="name-help" formControlName="name" />
+    </div>
+
+    <div class="col-3 flex flex-column gap-3">
+        @if ( getFormControls['city'].touched) {
+        <small class="p-error">
+            @if (getFormControls['city'].errors?.['required']) {
+            <p-message severity="error" variant="simple" size="small">City is required</p-message>
+            }
+        </small>
+        }
+        <label for="city">City</label>
+        <input pInputText id="city" maxlength="255" aria-describedby="city-help" formControlName="city" />
+    </div>
+
+    <div class="col-3 flex flex-column gap-3">
+        @if ( getFormControls['country'].touched) {
+        <small class="p-error">
+            @if (getFormControls['country'].errors?.['required']) {
+            <p-message severity="error" variant="simple" size="small">Country is required</p-message>
+            }
+        </small>
+        }
+        <label for="country">Country</label>
+        <input pInputText id="country" maxlength="255" aria-describedby="country-help" formControlName="country" />
+    </div>
+    
+    <div class="col-6 flex gap-3">
+        <p-button class="w-6 border-round-xl font-semibold" label="Update Profile" />
+        <p-button class="w-6 border-round-xl font-semibold" variant="text" label="Switch to Recruiter Profile" />
+    </div>
+</form>
