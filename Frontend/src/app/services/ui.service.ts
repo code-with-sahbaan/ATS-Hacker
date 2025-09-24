@@ -8,6 +8,8 @@ import { MessageService } from 'primeng/api';
 export class UiService {
   isLoading = false;
   constructor(private messageService: MessageService) {}
+  public heading: string = 'Hello';
+  public subHeading: string = 'World';
 
   showSpinner() {
     this.isLoading = true;

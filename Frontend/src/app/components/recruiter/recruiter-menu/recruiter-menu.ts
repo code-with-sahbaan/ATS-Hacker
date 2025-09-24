@@ -6,14 +6,13 @@ import { Menubar } from 'primeng/menubar';
 import { ButtonModule } from 'primeng/button';
 import { UiService } from '../../../services/ui.service';
 
-
 @Component({
-  selector: 'app-candidate-menu',
+  selector: 'app-recruiter-menu',
   imports: [Menubar, RouterOutlet, CommonModule, ButtonModule, RouterLink],
-  templateUrl: './candidate-menu.html',
-  styleUrl: './candidate-menu.css'
+  templateUrl: './recruiter-menu.html',
+  styleUrl: './recruiter-menu.css'
 })
-export class CandidateMenu {
+export class RecruiterMenu {
 
   activeItem: string = '';
 
@@ -28,17 +27,17 @@ export class CandidateMenu {
       {
         label: 'Home',
         icon: 'pi pi-home',
-        routerLink: '/candidate/home',
+        routerLink: '/recruiter/home',
       },
       {
-        label: 'Practice with AI Interview',
-        icon: 'pi pi-microchip-ai',
-        routerLink: '/candidate/AiInterview'
+        label: 'Post Job',
+        icon: 'pi pi-briefcase',
+        routerLink: '/recruiter/post-job'
       },
       {
         label: 'My Profile',
         icon: 'pi pi-user',
-        routerLink: '/candidate/profile'
+        routerLink: '/recruiter/profile'
       }
     ];
 
@@ -84,4 +83,5 @@ export class CandidateMenu {
   isActive(item: MenuItem): boolean {
     return item.routerLink === this.activeItem;
   }
+
 }

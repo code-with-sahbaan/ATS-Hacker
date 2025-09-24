@@ -1,0 +1,41 @@
+:host ::ng-deep .p-menubar-end {
+  margin: 0 !important;
+}
+
+:host ::ng-deep .p-menubar {
+  justify-content: space-between;
+}
+
+.logo {
+  font-size: 2rem;
+  font-weight: bold;
+  color: white;
+  display: inline-block;
+  cursor: pointer;
+  overflow: hidden;
+  white-space: nowrap;
+
+  /* Show only "NH" initially */
+  width: 1.1ch;
+  transition: width 0.6s ease;
+}
+
+.logo:hover {
+  /* Expand to fit the full word */
+  width: 3ch;
+}
+
+:host ::ng-deep .p-button{
+  padding: 10px !important;
+}
+
+/* app.component.css */
+a.active {
+  background: var(--primary-color);
+  border-radius: 7px;
+  color: black;
+}
+
+:host ::ng-deep .p-menu-overlay{
+  right:0 !important;
+}

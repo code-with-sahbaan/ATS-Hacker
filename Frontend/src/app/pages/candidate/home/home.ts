@@ -16,7 +16,10 @@ import { ChipModule } from 'primeng/chip';
 })
 export class Home implements OnInit {
 
-  constructor(public uiService: UiService, public resumeService: ResumeService) { }
+  constructor(public uiService: UiService, public resumeService: ResumeService) { 
+    uiService.heading = 'Dashboard';
+    uiService.subHeading = 'Manage your resume and recommended Jobs';
+  }
 
   resumeDetails: Resume | undefined;
   resumeLoading: boolean = false;
