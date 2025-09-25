@@ -9,9 +9,13 @@ import { UiService } from '../../../services/ui.service';
 })
 export class Home {
 
-  constructor(public uiService: UiService){
-    uiService.heading = 'Dashboard';
-    uiService.subHeading = 'Manage your posted jobs and recommended resumes';
+  constructor(public uiService: UiService) {
+    setTimeout(() => this.setHeading(), 0);
+  }
+
+  setHeading() {
+    this.uiService.heading = 'Dashboard';
+    this.uiService.subHeading = 'Manage your posted jobs and recommended resumes';
   }
 
 }

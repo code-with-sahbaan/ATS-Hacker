@@ -25,6 +25,9 @@ public class Job {
     @Column(name = "JOB_ID")
     private long jobId;
 
+    @Column(name = "JOB_TITLE")
+    private String jobTitle;
+
     @Column(name = "RESPONSIBILITIES", length = 65535)
     private String responsibilities;
 

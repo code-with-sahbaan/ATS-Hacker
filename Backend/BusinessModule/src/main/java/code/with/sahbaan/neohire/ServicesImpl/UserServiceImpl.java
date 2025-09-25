@@ -74,7 +74,7 @@ public class UserServiceImpl implements UserService {
     @Override
     public BaseResponse<String> switchProfile() throws Exception {
         try {
-            Users users =  getCurrentlyLoggedUser();
+            Users users = getCurrentlyLoggedUser();
             if (users.getRole().equals(Constants.ROLE_CANDIDATE)) {
                 users.setRole(Constants.ROLE_RECRUITER);
             }else{

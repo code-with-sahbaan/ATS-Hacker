@@ -1,1 +1,25 @@
-<p>post-job works!</p>
+<form [formGroup]="postJobForm" (ngSubmit)="onSubmit()" class="flex flex-column gap-3">
+    <div class="col-5 flex flex-column gap-3">
+        @if (getFormControls['jobTitle'].touched) {
+        <small class="p-error">
+            @if (getFormControls['jobTitle'].errors?.['required']) {
+            <p-message severity="error" variant="simple" size="small">Job Title is required</p-message>
+            }
+        </small>
+        }
+        <label for="jobTitle">Job Title</label>
+        <input pInputText id="jobTitle" maxlength="255" aria-describedby="jobTitle-help" formControlName="jobTitle" />
+    </div>
+
+    <div class="col-5 flex flex-column gap-3">
+        @if (getFormControls['responsibilities'].touched) {
+        <small class="p-error">
+            @if (getFormControls['responsibilities'].errors?.['required']) {
+            <p-message severity="error" variant="simple" size="small">Responsibilities is required</p-message>
+            }
+        </small>
+        }
+        <label for="responsibilities">Responsibilities</label>
+        <textarea [maxlength]="MAX_LENGTH" pTextarea formControlName="responsibilities" id="responsibilities"></textarea>
+    </div>
+</form>

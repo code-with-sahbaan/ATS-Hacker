@@ -31,8 +31,12 @@ export class Profile implements OnInit {
       role: ['', Validators.required],
       country: ['', Validators.required],
     });
-    uiService.heading = 'Profile';
-    uiService.subHeading = 'Manage your personal details and profile';
+    setTimeout(() => this.setHeading(), 0);
+  }
+
+  setHeading() {
+    this.uiService.heading = 'Profile';
+    this.uiService.subHeading = 'Manage your personal details and profile';
   }
 
   ngOnInit(): void {
