@@ -72,4 +72,9 @@ public class ResumeServiceImpl implements ResumeService {
             throw new  Exception("Failed to get Resume Details");
         }
     }
+
+    @Override
+    public Resume findResumeById(long id) throws Exception {
+        return resumeRepository.findById(id).get();
+    }
 }

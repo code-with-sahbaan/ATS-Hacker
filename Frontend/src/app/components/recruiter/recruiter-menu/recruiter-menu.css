@@ -25,10 +25,6 @@
   width: 3ch;
 }
 
-:host ::ng-deep .p-button{
-  padding: 10px !important;
-}
-
 /* app.component.css */
 a.active {
   background: var(--primary-color);

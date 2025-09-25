@@ -1,25 +1,114 @@
-<form [formGroup]="postJobForm" (ngSubmit)="onSubmit()" class="flex flex-column gap-3">
-    <div class="col-5 flex flex-column gap-3">
-        @if (getFormControls['jobTitle'].touched) {
-        <small class="p-error">
-            @if (getFormControls['jobTitle'].errors?.['required']) {
-            <p-message severity="error" variant="simple" size="small">Job Title is required</p-message>
+<form [formGroup]="postJobForm" (ngSubmit)="onSubmit()" class="flex flex-column gap-5">
+
+    <div class="grid grid-nogutter gap-8">
+        <!-- Job Title -->
+        <div class="col-12 md:col-5 flex flex-column gap-3">
+            @if (getFormControls['jobTitle'].touched && getFormControls['jobTitle'].errors?.['required']) {
+            <small class="p-error">
+                <p-message severity="error" variant="simple" size="small">Job Title is required</p-message>
+            </small>
             }
-        </small>
-        }
-        <label for="jobTitle">Job Title</label>
-        <input pInputText id="jobTitle" maxlength="255" aria-describedby="jobTitle-help" formControlName="jobTitle" />
+            @if (getFormControls['jobTitle'].touched && getFormControls['jobTitle'].errors?.['maxlength']) {
+            <small class="p-error">
+                <p-message severity="error" variant="simple" size="small">Job Title must be within 255
+                    characters</p-message>
+            </small>
+            }
+            <label for="jobTitle">Job Title</label>
+            <input pInputText id="jobTitle" maxlength="255" aria-describedby="jobTitle-help"
+                formControlName="jobTitle" />
+        </div>
+
+        <!-- Submit -->
+        <div class="col-12 md:col-5 hidden md:flex grid grid-nogutter gap-3 align-items-end hidden">
+            <p-button type="submit" class="col-5 border-round-xl font-semibold" label="Post A Job"
+                [disabled]="postJobForm.invalid" />
+            <p-button type="button" class="col-5 border-round-xl font-semibold" label="Reset Form" variant="text"
+                (click)="resetForm()" />
+        </div>
     </div>
 
-    <div class="col-5 flex flex-column gap-3">
-        @if (getFormControls['responsibilities'].touched) {
-        <small class="p-error">
-            @if (getFormControls['responsibilities'].errors?.['required']) {
-            <p-message severity="error" variant="simple" size="small">Responsibilities is required</p-message>
+    <div class="grid grid-nogutter gap-8">
+
+        <!-- Responsibilities -->
+        <div class="col-12 md:col-5 flex flex-column gap-3">
+            @if (getFormControls['responsibilities'].touched &&
+            getFormControls['responsibilities'].errors?.['required']) {
+            <small class="p-error">
+                <p-message severity="error" variant="simple" size="small">Responsibilities is required</p-message>
+            </small>
             }
-        </small>
-        }
-        <label for="responsibilities">Responsibilities</label>
-        <textarea [maxlength]="MAX_LENGTH" pTextarea formControlName="responsibilities" id="responsibilities"></textarea>
+            @if (getFormControls['responsibilities'].touched &&
+            getFormControls['responsibilities'].errors?.['maxlength']) {
+            <small class="p-error">
+                <p-message severity="error" variant="simple" size="small">Responsibilities must be within {{MAX_LENGTH}}
+                    characters</p-message>
+            </small>
+            }
+            <label for="responsibilities">Responsibilities</label>
+            <textarea rows="10" [maxlength]="MAX_LENGTH" pTextarea formControlName="responsibilities"
+                id="responsibilities"></textarea>
+        </div>
+
+        <!-- Qualifications -->
+        <div class="col-12 md:col-5 flex flex-column gap-3">
+            @if (getFormControls['qualifications'].touched && getFormControls['qualifications'].errors?.['required']) {
+            <small class="p-error">
+                <p-message severity="error" variant="simple" size="small">Qualifications is required</p-message>
+            </small>
+            }
+            @if (getFormControls['qualifications'].touched && getFormControls['qualifications'].errors?.['maxlength']) {
+            <small class="p-error">
+                <p-message severity="error" variant="simple" size="small">Qualifications must be within {{MAX_LENGTH}}
+                    characters</p-message>
+            </small>
+            }
+            <label for="qualifications">Qualifications</label>
+            <textarea rows="10" [maxlength]="MAX_LENGTH" pTextarea formControlName="qualifications"
+                id="qualifications"></textarea>
+        </div>
+    </div>
+
+    <div class="grid grid-nogutter gap-8">
+
+        <!-- Company Details -->
+        <div class="col-12 md:col-5 flex flex-column gap-3">
+            @if (getFormControls['companyDetails'].touched && getFormControls['companyDetails'].errors?.['required']) {
+            <small class="p-error">
+                <p-message severity="error" variant="simple" size="small">Company Details is required</p-message>
+            </small>
+            }
+            @if (getFormControls['companyDetails'].touched && getFormControls['companyDetails'].errors?.['maxlength']) {
+            <small class="p-error">
+                <p-message severity="error" variant="simple" size="small">Company Details must be within {{MAX_LENGTH}}
+                    characters</p-message>
+            </small>
+            }
+            <label for="companyDetails">Company Details</label>
+            <textarea rows="10" [maxlength]="MAX_LENGTH" pTextarea formControlName="companyDetails"
+                id="companyDetails"></textarea>
+        </div>
+
+        <!-- Nice To Have -->
+        <div class="col-12 md:col-5 flex flex-column gap-3">
+            @if (getFormControls['niceToHave'].touched &&
+            getFormControls['niceToHave'].errors?.['maxlength']) {
+            <small class="p-error">
+                <p-message severity="error" variant="simple" size="small">Nice To Have must be within {{MAX_LENGTH}}
+                    characters</p-message>
+            </small>
+            }
+            <label for="niceToHave">Nice To Have</label>
+            <textarea rows="10" [maxlength]="MAX_LENGTH" pTextarea formControlName="niceToHave"
+                id="niceToHave"></textarea>
+        </div>
+    </div>
+
+    <!-- Submit -->
+    <div class="col-12 md:col-5 flex md:hidden grid grid-nogutter gap-3 align-items-end hidden">
+        <p-button type="submit" class="col-5 border-round-xl font-semibold" label="Post A Job"
+            [disabled]="postJobForm.invalid" />
+        <p-button type="button" class="col-5 border-round-xl font-semibold" label="Reset Form" variant="text"
+            (click)="resetForm()" />
     </div>
 </form>

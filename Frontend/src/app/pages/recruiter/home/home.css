@@ -1,0 +1,7 @@
+:host ::ng-deep .p-accordionpanel{
+    border: none !important;
+}
+
+:host ::ng-deep .p-card-body{
+    padding: 3px !important;
+}

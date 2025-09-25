@@ -37,6 +37,9 @@ public class Job {
     @Column(name = "NICE_TO_HAVE", length = 65535)
     private String niceToHave;
 
+    @Column(name = "COMPANY_DETAILS", length = 65535)
+    private String companyDetails;
+
     @Column(name = "JOB_POSTED_DATE")
     private LocalDateTime jobPostedDateTime;
 

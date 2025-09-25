@@ -31,3 +31,16 @@ export function logout() {
     localStorage.clear();
     window.location.href = APP_URL;
 }
+
+export function formatDateTime(dateStr: string) {
+    const date = new Date(dateStr);
+
+    return new Intl.DateTimeFormat('en-US', {
+        month: '2-digit',
+        day: '2-digit',
+        year: 'numeric',
+        hour: '2-digit',
+        minute: '2-digit',
+        hour12: true
+    }).format(date).replace(',', '');
+}

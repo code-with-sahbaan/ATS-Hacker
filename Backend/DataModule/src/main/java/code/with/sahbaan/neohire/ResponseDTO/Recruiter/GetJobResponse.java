@@ -15,6 +15,10 @@ public class GetJobResponse {
 
     private long jobId;
 
+    private String jobTitle;
+
+    private String companyDetails;
+
     private String responsibilities;
 
     private String qualifications;

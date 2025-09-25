@@ -13,7 +13,9 @@ public interface JobRepository extends JpaRepository<Job, Long> {
 
     @Query("SELECT NEW " +
             "code.with.sahbaan.neohire.ResponseDTO.Recruiter." +
-            "GetJobResponse(jb.jobId, jb.responsibilities, jb.qualifications, jb.niceToHave, jb.jobPostedDateTime) " +
+            "GetJobResponse(jb.jobId, jb.jobTitle, " +
+            "jb.companyDetails, jb.responsibilities, " +
+            "jb.qualifications, jb.niceToHave, jb.jobPostedDateTime) " +
             "FROM Job jb WHERE jb.recruiter = :users")
     List<GetJobResponse> getAllJobs(@Param("users")Users users);
 }

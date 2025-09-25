@@ -1,1 +1,55 @@
-<p>home works!</p>
+<div class="grid grid-nogutter gap-8">
+    <!-- Jobs -->
+    <div class="col-12 lg:col-5">
+        <p class="text-4xl mb-4 font-bold">Posted Jobs</p>
+        <p-accordion value="0" (onOpen)="fetchResumes($event)">
+            @for (item of jobs; track $index) {
+            <p-card>
+                <p-accordion-panel value="{{item.jobId}}">
+                    <p-accordion-header>{{item.jobTitle}}</p-accordion-header>
+                    <p-accordion-content>
+                        <div class="flex gap-4 w-4 mb-4">
+                            <p-button icon="pi pi-trash" severity="danger" />
+                        </div>
+                        <p class="text-sm mb-4">We Recommed to delete and add new job posting instead of updating as this help the candidates to get best jobs for them.</p>
+                        <p-chip label="Posted At: {{fDt(item.jobPostedDateTime.toString())}}" class="mb-4" />
+                        <div class="mb-4 flex flex-column gap-3" style="white-space: pre-line;">
+                            <p class="text-2xl font-bold">Company Details</p>
+                            <p>{{item.companyDetails}}</p>
+                        </div>
+                        <div class="mb-4 flex flex-column gap-3" style="white-space: pre-line;">
+                            <p class="text-2xl font-bold">Responsibilities</p>
+                            <p>{{item.responsibilities}}</p>
+                        </div>
+                        <div class="mb-4 flex flex-column gap-3" style="white-space: pre-line;">
+                            <p class="text-2xl font-bold">Qualifications</p>
+                            <p>{{item.qualifications}}</p>
+                        </div>
+                        <div class="mb-4 flex flex-column gap-3" style="white-space: pre-line;">
+                            <p class="text-2xl font-bold">Nice To Have</p>
+                            <p>{{item.niceToHave}}</p>
+                        </div>
+                    </p-accordion-content>
+                </p-accordion-panel>
+            </p-card>
+            }
+        </p-accordion>
+    </div>
+
+    <!-- Resumes -->
+    <div class="col-12 lg:col-5">
+        <p class="text-4xl mb-4 font-bold">Recommeded Resumes</p>
+        @if (fetchinResume) {
+        <div>
+            <p-skeleton height="2rem" class="mb-2" />
+            <p-skeleton height="2rem" class="mb-2" />
+            <p-skeleton height="2rem" class="mb-2" />
+        </div>
+        }@else {
+        @for (item of resumes; track $index) {
+        <a href="{{item?.resumeUrl}}" target="_blank" rel="noopener noreferrer"><p-chip
+                label="{{item?.resumeName}}" /></a>
+        }
+        }
+    </div>
+</div>
