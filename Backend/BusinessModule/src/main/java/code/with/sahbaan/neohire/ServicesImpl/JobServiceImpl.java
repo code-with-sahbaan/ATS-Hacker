@@ -65,7 +65,7 @@ public class JobServiceImpl implements JobService {
 
     @Override
     public Job getJobById(long id) throws Exception {
-        return jobRepository.findById(id).get();
+        return jobRepository.findById(id).orElse(null);
     }
 
     @Override
