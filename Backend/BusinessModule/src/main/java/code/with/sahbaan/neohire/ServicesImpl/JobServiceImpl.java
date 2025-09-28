@@ -14,7 +14,6 @@ import code.with.sahbaan.neohire.Services.RagService;
 import code.with.sahbaan.neohire.Services.ResumeService;
 import code.with.sahbaan.neohire.Services.UserService;
 import org.springframework.ai.document.Document;
-import org.springframework.ai.vectorstore.SearchRequest;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -56,7 +55,8 @@ public class JobServiceImpl implements JobService {
             Job job = new Job();
             BeanUtils.copyProperties(postJobRequest, job);
             job.setRecruiter(userService.getCurrentlyLoggedUser());
-            jobRepository.save(job);
+            Job saved = jobRepository.save(job);
+            ragService.ingestJobPost(saved);
             return new BaseResponse<>("Job Posted Successfully", null);
         }catch(Exception e){
             throw new Exception("Failed to post Job");
@@ -85,7 +85,7 @@ public class JobServiceImpl implements JobService {
 
                 if (sectionText.isBlank()) continue;
 
-                List<Document> sectionResults = ragService.getSimilaritySearches(sectionText);
+                List<Document> sectionResults = ragService.getSimilarityResumes(sectionText);
 
                 for (Document doc : sectionResults) {
                     Long resumeId = Long.parseLong(String.valueOf(doc.getMetadata().get("resumeId")));

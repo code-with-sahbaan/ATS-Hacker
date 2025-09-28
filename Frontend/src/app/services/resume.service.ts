@@ -24,4 +24,8 @@ export class ResumeService {
     return this.http.post('/resume/v1/updateResume', payload).pipe();
   }
 
+  getRecommendedJobs(): Observable<any> {
+    return this.http.get('/resume/v1/getRecommendedJobs').pipe();
+  }
+
 }

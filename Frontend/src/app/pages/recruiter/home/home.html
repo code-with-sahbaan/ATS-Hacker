@@ -2,7 +2,7 @@
     <!-- Jobs -->
     <div class="col-12 lg:col-5">
         <p class="text-4xl mb-4 font-bold">Posted Jobs</p>
-        <p-accordion value="0" (onOpen)="fetchResumes($event)">
+        <p-accordion value="0" (onOpen)="fetchResumes($event)" class="flex flex-column gap-3">
             @for (item of jobs; track $index) {
             <p-card>
                 <p-accordion-panel value="{{item.jobId}}">

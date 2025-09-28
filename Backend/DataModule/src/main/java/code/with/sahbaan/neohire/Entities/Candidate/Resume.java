@@ -28,6 +28,9 @@ public class Resume {
     @Column(name = "RESUME_NAME")
     private String resumeName;
 
+    @Column(name = "RESUME_TEXT", length = 65535)
+    private String resumeText;
+
     @Column(name = "LAST_UPDATED")
     private LocalDateTime lastUpdated;
 

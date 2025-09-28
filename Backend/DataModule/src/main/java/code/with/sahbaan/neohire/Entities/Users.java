@@ -1,7 +1,5 @@
 package code.with.sahbaan.neohire.Entities;
 
-import code.with.sahbaan.neohire.Entities.Candidate.Education;
-import code.with.sahbaan.neohire.Entities.Candidate.Experience;
 import code.with.sahbaan.neohire.Entities.Candidate.Resume;
 import code.with.sahbaan.neohire.Entities.Recruiter.Job;
 import jakarta.persistence.*;
@@ -52,17 +50,6 @@ public class Users {
     /*
      * CANDIDATE SPECIFIC FIELDS
      * */
-
-    @ElementCollection
-    @CollectionTable(name = "USER_RECOMMENDED_JOBS", joinColumns = @JoinColumn(name = "USER_ID"))
-    @Column(name = "RECOMMENDED_JOBS")
-    private Set<Long> recommendedJobIds;
-
-    @OneToMany(mappedBy = "candidate", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
-    private Set<Experience> experiences = new HashSet<>();
-
-    @OneToMany(mappedBy = "candidate", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
-    private Set<Education> educations = new HashSet<>();
 
     @OneToOne(mappedBy = "candidate", cascade = CascadeType.ALL)
     private Resume resume;

@@ -35,6 +35,7 @@ export class Home implements OnInit {
 
   initFetching() {
     this.getResumeDetails();
+    this.getRecommendedJobs();
   }
 
   onUpload(event: any) {
@@ -84,6 +85,30 @@ export class Home implements OnInit {
           this.uiService.showSuccess(response.responseMessage);
           const body = response.responseBody;
           this.resumeDetails = body;
+        },
+        error: (error) => {
+          // Showing error toast
+          this.uiService.showError(error.error.responseMessage);
+        },
+      });
+  }
+
+  getRecommendedJobs() {
+    this.resumeLoading = true;
+    this.resumeService
+      .getRecommendedJobs()
+      .pipe(
+        finalize(() => {
+          // Hiding Loader after API call completion
+          this.resumeLoading = false;
+        })
+      )
+      .subscribe({
+        next: (response) => {
+          // Showing success Toast
+          this.uiService.showSuccess(response.responseMessage);
+          const body = response.responseBody;
+          console.log(body);
         },
         error: (error) => {
           // Showing error toast
