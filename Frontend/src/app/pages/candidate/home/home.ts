@@ -2,21 +2,32 @@ import { Component, OnInit } from '@angular/core';
 import { CardModule } from 'primeng/card';
 import { FileUpload, FileUploadEvent } from 'primeng/fileupload';
 import { UiService } from '../../../services/ui.service';
-import { MAX_FILE_SIZE } from '../../../utils/common.util';
+import { formatDateTime, MAX_FILE_SIZE } from '../../../utils/common.util';
 import { Resume, ResumeService } from '../../../services/resume.service';
 import { finalize } from 'rxjs';
 import { Skeleton } from 'primeng/skeleton';
 import { ChipModule } from 'primeng/chip';
+import { AccordionModule } from 'primeng/accordion';
+import { ButtonModule } from 'primeng/button';
+import { JobService, PostedJob } from '../../../services/job.service';
+import { DialogModule } from 'primeng/dialog';
 
 @Component({
   selector: 'app-home',
-  imports: [CardModule, FileUpload, Skeleton, ChipModule],
+  imports: [CardModule, FileUpload, Skeleton, ChipModule, AccordionModule, ButtonModule, DialogModule, ChipModule],
   templateUrl: './home.html',
   styleUrl: './home.css'
 })
 export class Home implements OnInit {
+  
+  resumeDetails: Resume | undefined;
+  resumeLoading: boolean = false;
+  jobsLoading: boolean = false;
+  visibleJobDialog: boolean = false;
+  jobs: PostedJob[] = [];
+  selectedJob: PostedJob | undefined;
 
-  constructor(public uiService: UiService, public resumeService: ResumeService) {
+  constructor(public uiService: UiService, public resumeService: ResumeService, public jobService: JobService) {
     setTimeout(() => this.setHeading(), 0);
   }
 
@@ -24,10 +35,6 @@ export class Home implements OnInit {
     this.uiService.heading = 'Dashboard';
     this.uiService.subHeading = 'Manage your resume and recommended Jobs';
   }
-
-  resumeDetails: Resume | undefined;
-  resumeLoading: boolean = false;
-
 
   ngOnInit(): void {
     setTimeout(() => this.initFetching(), 0);
@@ -94,13 +101,13 @@ export class Home implements OnInit {
   }
 
   getRecommendedJobs() {
-    this.resumeLoading = true;
+    this.jobsLoading = true;
     this.resumeService
       .getRecommendedJobs()
       .pipe(
         finalize(() => {
           // Hiding Loader after API call completion
-          this.resumeLoading = false;
+          this.jobsLoading = false;
         })
       )
       .subscribe({
@@ -108,12 +115,21 @@ export class Home implements OnInit {
           // Showing success Toast
           this.uiService.showSuccess(response.responseMessage);
           const body = response.responseBody;
-          console.log(body);
+          this.jobs = body;
         },
         error: (error) => {
           // Showing error toast
           this.uiService.showError(error.error.responseMessage);
         },
       });
+  }
+
+  fDt(date: string | undefined) {
+    return formatDateTime(date!);
+  }
+
+  showJobDialog(job: PostedJob){
+    this.selectedJob = job;
+    this.visibleJobDialog = true;
   }
 }
