@@ -9,6 +9,7 @@ import code.with.sahbaan.neohire.ResponseDTO.BaseResponse;
 import code.with.sahbaan.neohire.ResponseDTO.Candidate.ResumeResponse;
 import code.with.sahbaan.neohire.ResponseDTO.Recruiter.GetJobResponse;
 import code.with.sahbaan.neohire.Services.*;
+import code.with.sahbaan.neohire.Utils.BusinessConstants;
 import jakarta.transaction.Transactional;
 import org.apache.pdfbox.Loader;
 import org.apache.pdfbox.pdmodel.PDDocument;
@@ -44,11 +45,6 @@ public class ResumeServiceImpl implements ResumeService {
 
     @Autowired
     private JobRepository jobRepository;
-
-    private static final Map<String, Double> SECTION_WEIGHTS = Map.of(
-            "Qualifications", 2.0,
-            "Responsibilities", 1.5
-    );
 
     @Transactional
     @Override
@@ -108,7 +104,7 @@ public class ResumeServiceImpl implements ResumeService {
                             Collectors.summingDouble(doc -> {
                                 double rawScore = doc.getScore() != null ? doc.getScore() : 0;
                                 String section = doc.getMetadata().get("section").toString();
-                                double weight = SECTION_WEIGHTS.getOrDefault(section, 1.0);
+                                double weight = BusinessConstants.SECTION_WEIGHTS.getOrDefault(section, 1.0);
                                 return rawScore * weight;   // apply weighted scoring
                             })
                     ));
@@ -119,8 +115,8 @@ public class ResumeServiceImpl implements ResumeService {
                     .toList();
 
             List<GetJobResponse> getJobResponses = new ArrayList<>();
-            for (int i = 0; i < rankedJobs.size(); i++) {
-                Job job = jobRepository.findById(Long.parseLong(rankedJobs.get(i))).get();
+            for (String rankedJob : rankedJobs) {
+                Job job = jobRepository.findById(Long.parseLong(rankedJob)).get();
                 GetJobResponse getJobResponse = new GetJobResponse();
                 BeanUtils.copyProperties(job, getJobResponse);
                 getJobResponses.add(getJobResponse);

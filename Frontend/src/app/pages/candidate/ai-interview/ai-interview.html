@@ -1,0 +1,70 @@
+<form [formGroup]="aiInterviewForm" (ngSubmit)="onSubmit()" class="grid grid-nogutter gap-3">
+
+    <div class="flex flex-column gap-3 col-12 md:col-4">
+        <div class="col-12 flex flex-column gap-3">
+            @if ( getFormControls['title'].touched) {
+            <small class="p-error">
+                @if (getFormControls['title'].errors?.['required']) {
+                <p-message severity="error" variant="simple" size="small">Title is required</p-message>
+                }
+            </small>
+            }
+            <label for="name">Title</label>
+            <input pInputText id="title" maxlength="255" aria-describedby="title-help" formControlName="title" />
+        </div>
+
+        <div class="col-12 flex flex-column gap-3">
+            @if (getFormControls['yourYearsOfExperience'].touched) {
+            <small class="p-error">
+                @if (getFormControls['yourYearsOfExperience'].errors?.['required']) {
+                <p-message severity="error" variant="simple" size="small">Years of Experience is required</p-message>
+                }
+                @if (getFormControls['yourYearsOfExperience'].errors?.['min']) {
+                <p-message severity="error" variant="simple" size="small">Years of Experience must be at least
+                    1</p-message>
+                }
+            </small>
+            }
+            <label for="name">Years of Experience</label>
+            <input pInputText id="yourYearsOfExperience" type="number" aria-describedby="yourYearsOfExperience-help"
+                formControlName="yourYearsOfExperience" />
+        </div>
+
+        <div class="col-12 flex flex-column gap-3">
+            @if ( getFormControls['applyingForPosition'].touched) {
+            <small class="p-error">
+                @if (getFormControls['applyingForPosition'].errors?.['required']) {
+                <p-message severity="error" variant="simple" size="small">Position is required</p-message>
+                }
+            </small>
+            }
+            <label for="applyingForPosition">Position</label>
+            <input pInputText id="applyingForPosition" maxlength="255" aria-describedby="applyingForPosition-help"
+                formControlName="applyingForPosition" />
+        </div>
+
+        <div class="col-12 flex flex-column gap-3">
+            @if (getFormControls['requiredExperienceForJob'].touched) {
+            <small class="p-error">
+                @if (getFormControls['requiredExperienceForJob'].errors?.['required']) {
+                <p-message severity="error" variant="simple" size="small">Required Experience For Job is
+                    required</p-message>
+                }
+                @if (getFormControls['requiredExperienceForJob'].errors?.['min']) {
+                <p-message severity="error" variant="simple" size="small">Required Experience For Job must be at least
+                    1</p-message>
+                }
+            </small>
+            }
+            <label for="name">Required Experience For Job</label>
+            <input pInputText id="requiredExperienceForJob" type="number"
+                aria-describedby="requiredExperienceForJob-help" formControlName="requiredExperienceForJob" />
+        </div>
+
+        <div class="col-12 flex gap-3">
+            <p-button type="submit" class="w-12 border-round-xl font-semibold" label="Start Your Interview"
+                [disabled]="aiInterviewForm.invalid" />
+        </div>
+    </div>
+
+</form>

@@ -8,6 +8,7 @@ import { Home } from './pages/candidate/home/home';
 import { Home as RecruiterHome } from './pages/recruiter/home/home';
 import { RecruiterMenu } from './components/recruiter/recruiter-menu/recruiter-menu';
 import { PostJob } from './pages/recruiter/post-job/post-job';
+import { AiInterview } from './pages/candidate/ai-interview/ai-interview';
 
 export const routes: Routes = [
     {
@@ -36,6 +37,11 @@ export const routes: Routes = [
                 path: 'home',
                 component: Home,
                 data: { title: 'Home' }
+            },
+            {
+                path: 'aiInterview',
+                component: AiInterview,
+                data: { title: 'AI Interview' }
             },
             {
                 path: 'profile',

@@ -13,6 +13,7 @@ import code.with.sahbaan.neohire.Services.JobService;
 import code.with.sahbaan.neohire.Services.RagService;
 import code.with.sahbaan.neohire.Services.ResumeService;
 import code.with.sahbaan.neohire.Services.UserService;
+import code.with.sahbaan.neohire.Utils.BusinessConstants;
 import org.springframework.ai.document.Document;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -92,11 +93,7 @@ public class JobServiceImpl implements JobService {
                     double score = doc.getScore() != null ? doc.getScore() : 0.0; // higher = more similar
 
                     // Weight RequiredExperience higher than NiceToHave, etc.
-                    double weight = switch (sectionName) {
-                        case "Qualifications" -> 2.0;
-                        case "Responsibilities" -> 1.5;
-                        default -> 1.0;
-                    };
+                    double weight = BusinessConstants.SECTION_WEIGHTS.getOrDefault(sectionName, 1.0);
 
                     resumeScores.merge(resumeId, score * weight, Double::sum);
                 }
