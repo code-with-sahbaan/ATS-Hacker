@@ -11,7 +11,10 @@ import code.with.sahbaan.neohire.Utils.Constants;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.oauth2.jwt.Jwt;
+import org.springframework.security.oauth2.server.resource.authentication.JwtAuthenticationToken;
 import org.springframework.stereotype.Service;
 
 import java.util.Optional;
@@ -49,6 +52,20 @@ public class UserServiceImpl implements UserService {
             return findByEmail(email).get();
         }catch(Exception e){
             throw new  Exception("Failed to get Users");
+        }
+    }
+
+    @Override
+    public String getToken() throws Exception {
+        try{
+            Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+            if (auth instanceof JwtAuthenticationToken jwtAuth) {
+                Jwt jwt = jwtAuth.getToken();
+                return jwt.getTokenValue();
+            }
+            return null;
+        }catch(Exception e){
+            throw new Exception("Failed to get Token");
         }
     }
 

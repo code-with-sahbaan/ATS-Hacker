@@ -13,6 +13,8 @@ public interface UserService {
 
     void saveOrUpdate(Users user) throws Exception;
 
+    String getToken() throws Exception;
+
     Users getCurrentlyLoggedUser() throws Exception;
 
     BaseResponse<UserResponse> getUserDetails() throws Exception;
