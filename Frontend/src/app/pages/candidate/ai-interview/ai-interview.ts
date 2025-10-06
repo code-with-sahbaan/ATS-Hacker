@@ -14,6 +14,7 @@ import { Message } from 'primeng/message';
 export class AiInterview {
 
   aiInterviewForm: FormGroup;
+  private mediaRecorder!: MediaRecorder;
 
   constructor(public uiService: UiService, public fb: FormBuilder) {
     setTimeout(() => this.setHeading(), 0);
