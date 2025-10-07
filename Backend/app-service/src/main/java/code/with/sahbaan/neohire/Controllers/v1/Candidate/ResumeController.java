@@ -21,6 +21,7 @@ public class ResumeController {
     @Autowired
     private ResumeService resumeService;
 
+
     @PostMapping("updateResume")
     public ResponseEntity<BaseResponse<ResumeResponse>> updateResume(@RequestParam("resume") MultipartFile resume) throws Exception {
         log.info("Executing updateResume in ResumeController");
@@ -38,4 +39,5 @@ public class ResumeController {
         log.info("Executing getRecommendedJobs in ResumeController");
         return new ResponseEntity<>(resumeService.getRecommendedJobs(), HttpStatus.OK);
     }
+
 }

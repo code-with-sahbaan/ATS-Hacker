@@ -1,6 +1,7 @@
 package code.with.sahbaan.neohire.ServicesImpl;
 
 import code.with.sahbaan.neohire.RequestDTO.Candidate.InitiateInterview;
+import code.with.sahbaan.neohire.ResponseDTO.BaseResponse;
 import code.with.sahbaan.neohire.Services.AiInterviewService;
 import code.with.sahbaan.neohire.Services.UserService;
 import code.with.sahbaan.neohire.Utils.InterviewDetails;
@@ -89,7 +90,6 @@ public class AiInterviewServiceImpl implements AiInterviewService {
     private String speechToText(MultipartFile speech){
         OpenAiAudioTranscriptionOptions aiAudioTranscriptionOptions = OpenAiAudioTranscriptionOptions.builder()
                 .responseFormat(OpenAiAudioApi.TranscriptResponseFormat.TEXT)
-                .temperature(0f)
                 .build();
         AudioTranscriptionPrompt audioTranscriptionPrompt = new AudioTranscriptionPrompt(speech.getResource(), aiAudioTranscriptionOptions);
         return audioTranscriptionModel.call(audioTranscriptionPrompt).getResult().getOutput();

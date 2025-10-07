@@ -1,3 +1,4 @@
+@if (!interviewInitiated) {
 <form [formGroup]="aiInterviewForm" (ngSubmit)="onSubmit()" class="grid grid-nogutter gap-3">
 
     <div class="flex flex-column gap-3 col-12 md:col-4">
@@ -68,3 +69,13 @@
     </div>
 
 </form>
+}@else {
+
+    @if (isRecording) {
+        <p>Recording Your answer Now</p>
+        <p-button class="w-12 border-round-xl font-semibold" label="Complete Your Answer" (click)="stopRecording()" />
+    }@else {
+        <p>AI is answering</p>
+    }
+
+}

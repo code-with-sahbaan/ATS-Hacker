@@ -19,6 +19,14 @@ export class InterviewService {
     constructor(private http: HttpClient) { }
 
     initiateInterview(payload: InitiateInterview): Observable<any> {
-        return this.http.post('/interview/v1/initiateInterview', payload).pipe();
+        return this.http.post('/interview/v1/initiateInterview', payload, {
+            responseType: 'arraybuffer'
+        }).pipe();
+    }
+
+    getReply(payload: FormData): Observable<any> {
+        return this.http.post('/interview/v1/getReply', payload, {
+            responseType: 'arraybuffer'
+        }).pipe();
     }
 }
