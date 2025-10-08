@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, NgZone } from '@angular/core';
 import { UiService } from '../../../services/ui.service';
 import { InputTextModule } from 'primeng/inputtext';
 import { ButtonModule } from 'primeng/button';
@@ -22,13 +22,13 @@ export class AiInterview {
   isRecording = false;
   audioBlob: Blob | null = null;
 
-  constructor(public uiService: UiService, public fb: FormBuilder, public interviewService: InterviewService) {
+  constructor(public uiService: UiService, public fb: FormBuilder, public interviewService: InterviewService, public zone: NgZone) {
     setTimeout(() => this.setHeading(), 0);
     this.aiInterviewForm = fb.group({
-      title: ['', Validators.required],
-      yourYearsOfExperience: [0, [Validators.required, Validators.min(1)]],
-      applyingForPosition: ['', Validators.required],
-      requiredExperienceForJob: [0, [Validators.required, Validators.min(1)]]
+      title: ['Software Developer', Validators.required],
+      yourYearsOfExperience: [5, [Validators.required, Validators.min(1)]],
+      applyingForPosition: ['Senior Software Developer', Validators.required],
+      requiredExperienceForJob: [6, [Validators.required, Validators.min(1)]]
     })
   }
 
@@ -67,18 +67,19 @@ export class AiInterview {
     audio.play();
 
     audio.onended = ()=>{
+      this.zone.run(()=>{
+        this.isRecording = true;
+      })
       this.startRecording();
     }
   }
 
   async startRecording() {
-    this.isRecording = true;
     this.audioChunks = [];
     const stream = await navigator.mediaDevices.getUserMedia({ audio: true });
     this.mediaRecorder = new MediaRecorder(stream);
 
     this.mediaRecorder.ondataavailable = (event) => {
-      console.log("data available");
       if (event.data.size > 0) {
         this.audioChunks.push(event.data);
       }
@@ -86,6 +87,7 @@ export class AiInterview {
 
     this.mediaRecorder.onstop = () => {
       this.audioBlob = new Blob(this.audioChunks, { type: 'audio/webm' });
+      this.sendRecording();
     };
 
     this.mediaRecorder.start();
@@ -94,12 +96,10 @@ export class AiInterview {
   stopRecording() {
     this.isRecording = false;
     this.mediaRecorder.stop();
-    this.sendRecording();
   }
 
   sendRecording() {
     if (!this.audioBlob){
-      console.log("data not available");
       return;
     };
 
