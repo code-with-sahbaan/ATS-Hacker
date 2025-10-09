@@ -21,14 +21,15 @@ export class AiInterview {
   private audioChunks: Blob[] = [];
   isRecording = false;
   audioBlob: Blob | null = null;
+  isInterviewEnded: boolean = false;
 
   constructor(public uiService: UiService, public fb: FormBuilder, public interviewService: InterviewService, public zone: NgZone) {
     setTimeout(() => this.setHeading(), 0);
     this.aiInterviewForm = fb.group({
-      title: ['Software Developer', Validators.required],
-      yourYearsOfExperience: [5, [Validators.required, Validators.min(1)]],
-      applyingForPosition: ['Senior Software Developer', Validators.required],
-      requiredExperienceForJob: [6, [Validators.required, Validators.min(1)]]
+      title: ['', Validators.required],
+      yourYearsOfExperience: [1, [Validators.required, Validators.min(1)]],
+      applyingForPosition: ['', Validators.required],
+      requiredExperienceForJob: [1, [Validators.required, Validators.min(1)]]
     })
   }
 
@@ -98,10 +99,21 @@ export class AiInterview {
     this.mediaRecorder.stop();
   }
 
+  endInterview(){
+    this.stopRecording();
+    this.interviewInitiated = false;
+    this.isInterviewEnded = true;
+  }
+
   sendRecording() {
     if (!this.audioBlob){
       return;
     };
+    if(this.isInterviewEnded){
+      this.mediaRecorder.stream.getTracks().forEach(track => track.stop());
+      this.isInterviewEnded = false;
+      return;
+    }
 
     const formData = new FormData();
     formData.append('answer', this.audioBlob, 'recording.webm');

@@ -70,12 +70,18 @@
 
 </form>
 }@else {
-
-    @if (isRecording) {
-        <p>Recording Your answer Now</p>
-        <p-button class="w-12 border-round-xl font-semibold" label="Complete Your Answer" (click)="stopRecording()" />
-    }@else {
-        <p>AI is answering</p>
-    }
-
+<div
+    class="w-12 h-15rem flex align-items-center justify-content-center {{isRecording ? 'audio-box-disabled':'audio-box'}}">
+    <p class="text-white text-8xl font-bold">AI</p>
+</div>
+<div
+    class="w-12 h-15rem flex align-items-center justify-content-center {{!isRecording ? 'audio-box-disabled':'audio-box'}}">
+    <p class="text-white text-8xl font-bold">YOU</p>
+</div>
+@if (isRecording) {
+<div class="mb-4">
+    <p-button class="w-12 border-round-xl font-semibold" label="Complete Your Answer" (click)="stopRecording()" />
+</div>
+}
+<p-button class="w-12 border-round-xl font-semibold" severity="danger" label="End Interview" (click)="endInterview()" />
 }

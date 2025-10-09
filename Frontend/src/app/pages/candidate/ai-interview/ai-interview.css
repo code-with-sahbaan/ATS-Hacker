@@ -1,0 +1,12 @@
+.audio-box {
+    background: #2A7B9B;
+    background: linear-gradient(90deg, rgba(42, 123, 155, 0.33) 0%, rgba(87, 199, 133, 0.41) 50%, rgba(237, 221, 83, 0.27) 100%);
+    border-radius: 20px;
+    margin-bottom: 20px;
+}
+
+.audio-box-disabled {
+    background: lightgrey;
+    border-radius: 20px;
+    margin-bottom: 20px;
+}
