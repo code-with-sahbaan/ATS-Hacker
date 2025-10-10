@@ -68,6 +68,7 @@ export class Home implements OnInit {
           this.uiService.showSuccess(response.responseMessage);
           const body = response.responseBody;
           this.resumeDetails = body;
+          this.getRecommendedJobs()
         },
         error: (error) => {
           // Showing error toast

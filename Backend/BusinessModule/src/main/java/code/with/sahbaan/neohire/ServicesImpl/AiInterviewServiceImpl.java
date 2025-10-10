@@ -50,13 +50,13 @@ public class AiInterviewServiceImpl implements AiInterviewService {
             StringBuilder systemMessage = new  StringBuilder();
             systemMessage.append("You are a interviewer needs to conduct interview for a candidate having ")
                     .append(initiateInterview.getYourYearsOfExperience())
-                    .append(" years of experience in ")
+                    .append(" year(s) of experience in ")
                     .append(initiateInterview.getTitle())
                     .append(". You have to take interview for the position of ")
                     .append(initiateInterview.getApplyingForPosition())
                     .append(" that requires ")
                     .append(initiateInterview.getRequiredExperienceForJob())
-                    .append("of experience. You need to ask relevant queries and evaluate the candidate between 1-100.")
+                    .append(" year(s) of experience. You need to ask relevant queries and evaluate the candidate between 1-100.")
                     .append(" Whenever user answer the query completely then ask next question or if he/she ask for some clarification of current one then give that.");
 
             // Building Introduction Message
