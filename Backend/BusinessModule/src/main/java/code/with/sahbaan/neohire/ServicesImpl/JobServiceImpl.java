@@ -74,9 +74,9 @@ public class JobServiceImpl implements JobService {
         try{
             Job job = getJobById(recommendedResumeRequest.getJobId());
             Map<String, String> jdSections = Map.of(
-                    "Qualifications", job.getQualifications(),
-                    "Responsibilities",  job.getResponsibilities(),
-                    "NiceToHave", job.getNiceToHave()
+                    BusinessConstants.QUALIFICATIONS, job.getQualifications(),
+                    BusinessConstants.RESPONSIBILITIES,  job.getResponsibilities(),
+                    BusinessConstants.NICE_TO_HAVE, job.getNiceToHave()
             );
             Map<Long, Double> resumeScores = new HashMap<>();
 

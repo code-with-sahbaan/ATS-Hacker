@@ -2,6 +2,7 @@ package code.with.sahbaan.neohire.ServicesImpl;
 
 import code.with.sahbaan.neohire.Entities.Recruiter.Job;
 import code.with.sahbaan.neohire.Services.RagService;
+import code.with.sahbaan.neohire.Utils.BusinessConstants;
 import org.springframework.ai.document.Document;
 import org.springframework.ai.reader.TextReader;
 import org.springframework.ai.reader.pdf.PagePdfDocumentReader;
@@ -56,9 +57,9 @@ public class RagServiceImpl implements RagService {
             );
             for (int i = 0; i < 3; i++) {
                 String section = switch (i) {
-                    case 0 -> "Qualifications";
-                    case 1 -> "NiceToHave";
-                    case 2 -> "Responsibilities";
+                    case 0 -> BusinessConstants.QUALIFICATIONS;
+                    case 1 -> BusinessConstants.NICE_TO_HAVE;
+                    case 2 -> BusinessConstants.RESPONSIBILITIES;
                     default -> "";
                 };
                 String text = switch (i) {
