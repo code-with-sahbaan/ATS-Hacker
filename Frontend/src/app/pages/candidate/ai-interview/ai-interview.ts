@@ -22,6 +22,7 @@ export class AiInterview {
   isRecording = false;
   audioBlob: Blob | null = null;
   isInterviewEnded: boolean = false;
+  audio: HTMLAudioElement | undefined;
 
   constructor(public uiService: UiService, public fb: FormBuilder, public interviewService: InterviewService, public zone: NgZone) {
     setTimeout(() => this.setHeading(), 0);
@@ -64,10 +65,10 @@ export class AiInterview {
   playAudio(data: any) {
     const blob = new Blob([data], { type: 'audio/mpeg' });
     const url = URL.createObjectURL(blob);
-    const audio = new Audio(url);
-    audio.play();
+    this.audio = new Audio(url);
+    this.audio.play();
 
-    audio.onended = ()=>{
+    this.audio.onended = ()=>{
       this.zone.run(()=>{
         this.isRecording = true;
       })
@@ -103,6 +104,7 @@ export class AiInterview {
     this.stopRecording();
     this.interviewInitiated = false;
     this.isInterviewEnded = true;
+    this.audio?.pause();
   }
 
   sendRecording() {
