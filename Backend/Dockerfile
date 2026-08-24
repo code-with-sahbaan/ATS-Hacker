@@ -9,6 +9,9 @@ COPY DataModule/pom.xml DataModule/pom.xml
 COPY SecurityModule/pom.xml SecurityModule/pom.xml
 COPY app-service/pom.xml app-service/pom.xml
 
+# Download dependencies
+RUN mvn dependency:go-offline
+
 # Copy source code
 COPY BusinessModule/src BusinessModule/src
 COPY DataModule/src DataModule/src
