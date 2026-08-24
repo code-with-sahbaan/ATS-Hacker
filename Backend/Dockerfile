@@ -13,9 +13,9 @@ COPY app-service/pom.xml app-service/pom.xml
 RUN mvn dependency:go-offline
 
 # Copy source code
-COPY Business/src Business/src
-COPY Data/src Data/src
-COPY Security/src Security/src
+COPY BusinessModule/src Business/src
+COPY DataModule/src Data/src
+COPY SecurityModule/src Security/src
 COPY app-service/src app-service/src
 
 # Build all modules
