@@ -93,7 +93,7 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public void switchProfile(HttpServletResponse response) throws Exception {
+    public BaseResponse<String> switchProfile(HttpServletResponse response) throws Exception {
         try {
             Users users = getCurrentlyLoggedUser();
             if (users.getRole().equals(Constants.ROLE_CANDIDATE)) {
@@ -113,7 +113,8 @@ public class UserServiceImpl implements UserService {
                     .build();
 
             response.addHeader(HttpHeaders.SET_COOKIE, accessTokenCookie.toString());
-            response.sendRedirect(allowedOrigins);
+            String url = allowedOrigins;
+            return new BaseResponse<>("Profile Switched Successfully", url);
         } catch (Exception e) {
             throw new Exception("Failed to switch Profile");
         }

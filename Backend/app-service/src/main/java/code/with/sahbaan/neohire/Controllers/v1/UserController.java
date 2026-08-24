@@ -34,8 +34,8 @@ public class UserController {
     }
 
     @GetMapping("switchProfile")
-    public void switchProfile(HttpServletResponse response) throws Exception {
+    public ResponseEntity<BaseResponse<String>> switchProfile(HttpServletResponse response) throws Exception {
         log.info("Executing switchProfile in UserController");
-        userService.switchProfile(response);
+        return new ResponseEntity<>(userService.switchProfile(response), HttpStatus.OK);
     }
 }

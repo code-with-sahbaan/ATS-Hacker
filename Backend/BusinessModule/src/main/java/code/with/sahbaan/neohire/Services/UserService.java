@@ -22,5 +22,5 @@ public interface UserService {
 
     BaseResponse<UserResponse> updateUserDetails(UpdateUserRequest updateUserRequest) throws Exception;
 
-    void switchProfile(HttpServletResponse response) throws Exception;
+    BaseResponse<String> switchProfile(HttpServletResponse response) throws Exception;
 }
