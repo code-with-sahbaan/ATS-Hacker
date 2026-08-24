@@ -4,9 +4,9 @@ WORKDIR /app
 
 # Copy POM files first for better Docker layer caching
 COPY pom.xml .
-COPY Business/pom.xml Business/pom.xml
-COPY Data/pom.xml Data/pom.xml
-COPY Security/pom.xml Security/pom.xml
+COPY BusinessModule/pom.xml Business/pom.xml
+COPY DataModule/pom.xml Data/pom.xml
+COPY SecurityModule/pom.xml Security/pom.xml
 COPY app-service/pom.xml app-service/pom.xml
 
 # Download dependencies
