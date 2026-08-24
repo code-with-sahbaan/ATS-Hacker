@@ -2,3 +2,4 @@
 /Frontend/src/environments/*.ts
 commit-message-pattern.txt
 /Info/
+/Backend/.env
