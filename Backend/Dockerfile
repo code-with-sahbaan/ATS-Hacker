@@ -2,7 +2,7 @@ FROM maven:3.9-eclipse-temurin-21 AS build
 
 WORKDIR /app
 
-# Copy POM files first
+# Copy POM files first for better Docker layer caching
 COPY pom.xml .
 COPY BusinessModule/pom.xml BusinessModule/pom.xml
 COPY DataModule/pom.xml DataModule/pom.xml
@@ -16,7 +16,7 @@ COPY SecurityModule/src SecurityModule/src
 COPY app-service/src app-service/src
 
 # Build all modules
-RUN mvn -B clean package -DskipTests
+RUN mvn clean package -DskipTests
 
 
 FROM eclipse-temurin:21-jre
