@@ -4,18 +4,18 @@ WORKDIR /app
 
 # Copy POM files first for better Docker layer caching
 COPY pom.xml .
-COPY BusinessModule/pom.xml Business/pom.xml
-COPY DataModule/pom.xml Data/pom.xml
-COPY SecurityModule/pom.xml Security/pom.xml
+COPY BusinessModule/pom.xml BusinessModule/pom.xml
+COPY DataModule/pom.xml DataModule/pom.xml
+COPY SecurityModule/pom.xml SecurityModule/pom.xml
 COPY app-service/pom.xml app-service/pom.xml
 
 # Download dependencies
 RUN mvn dependency:go-offline
 
 # Copy source code
-COPY BusinessModule/src Business/src
-COPY DataModule/src Data/src
-COPY SecurityModule/src Security/src
+COPY BusinessModule/src BusinessModule/src
+COPY DataModule/src DataModule/src
+COPY SecurityModule/src SecurityModule/src
 COPY app-service/src app-service/src
 
 # Build all modules
