@@ -95,11 +95,7 @@ public class WebConfiguration {
         http.oauth2ResourceServer(oauth ->{
            oauth
                    .bearerTokenResolver(bearerTokenResolver)
-                   .jwt(jwt -> jwt
-                           .jwtAuthenticationConverter(
-                                   jwtAuthenticationConverter
-                           )
-                   );
+                   .jwt(Customizer.withDefaults());
         });
 
         http
