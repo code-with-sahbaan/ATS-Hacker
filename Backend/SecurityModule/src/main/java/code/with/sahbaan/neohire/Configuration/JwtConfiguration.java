@@ -1,5 +1,7 @@
 package code.with.sahbaan.neohire.Configuration;
 
+import code.with.sahbaan.neohire.Utils.Constants;
+import jakarta.servlet.http.Cookie;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -9,6 +11,7 @@ import org.springframework.security.oauth2.jwt.JwtException;
 import org.springframework.security.oauth2.jwt.JwtValidationException;
 import org.springframework.security.oauth2.jwt.NimbusJwtDecoder;
 import org.springframework.security.oauth2.server.resource.authentication.JwtAuthenticationConverter;
+import org.springframework.security.oauth2.server.resource.web.BearerTokenResolver;
 
 import javax.crypto.SecretKey;
 import javax.crypto.spec.SecretKeySpec;
@@ -34,6 +37,25 @@ public class JwtConfiguration {
                 // Explicitly rethrow to trigger your entrypoint
                 throw new JwtException("Token expired or invalid", e);
             }
+        };
+    }
+
+    @Bean
+    public BearerTokenResolver bearerTokenResolver() {
+        return request -> {
+            Cookie[] cookies = request.getCookies();
+
+            if (cookies == null) {
+                return null;
+            }
+
+            for (Cookie cookie : cookies) {
+                if (Constants.ACCESS_TOKEN.equals(cookie.getName())) {
+                    return cookie.getValue();
+                }
+            }
+
+            return null;
         };
     }
 

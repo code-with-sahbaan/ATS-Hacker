@@ -14,7 +14,7 @@ import java.net.http.HttpResponse;
 @RequiredArgsConstructor
 public class KeepAliveScheduler {
 
-    @Value("${APP_URL}")
+    @Value("${app.url}")
     private String appUrl;
 
     private final HttpClient httpClient = HttpClient.newHttpClient();

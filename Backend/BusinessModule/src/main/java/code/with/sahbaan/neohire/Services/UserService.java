@@ -4,6 +4,7 @@ import code.with.sahbaan.neohire.Entities.Users;
 import code.with.sahbaan.neohire.RequestDTO.UpdateUserRequest;
 import code.with.sahbaan.neohire.ResponseDTO.BaseResponse;
 import code.with.sahbaan.neohire.ResponseDTO.UserResponse;
+import jakarta.servlet.http.HttpServletResponse;
 
 import java.util.Optional;
 
@@ -21,5 +22,5 @@ public interface UserService {
 
     BaseResponse<UserResponse> updateUserDetails(UpdateUserRequest updateUserRequest) throws Exception;
 
-    BaseResponse<String> switchProfile() throws Exception;
+    void switchProfile(HttpServletResponse response) throws Exception;
 }

@@ -15,7 +15,10 @@ import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configurers.AbstractHttpConfigurer;
 import org.springframework.security.config.http.SessionCreationPolicy;
+import org.springframework.security.oauth2.server.resource.authentication.JwtAuthenticationConverter;
+import org.springframework.security.oauth2.server.resource.web.BearerTokenResolver;
 import org.springframework.security.web.SecurityFilterChain;
+import org.springframework.security.web.authentication.logout.HttpStatusReturningLogoutSuccessHandler;
 import org.springframework.web.cors.CorsConfiguration;
 import org.springframework.web.cors.CorsConfigurationSource;
 import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
@@ -35,6 +38,10 @@ public class WebConfiguration {
     @Autowired
     private CustomOAuth2AuthenticationSuccessHandler customOAuth2AuthenticationSuccessHandler;
 
+    private final BearerTokenResolver bearerTokenResolver;
+
+    private final JwtAuthenticationConverter jwtAuthenticationConverter;
+
     @Value("${cors.allowed.origins}")
     private String originAllowed;
 
@@ -47,6 +54,7 @@ public class WebConfiguration {
         config.setAllowedOrigins(List.of(originAllowed));
         config.setAllowedHeaders(List.of("Authorization", "Content-Type"));
         config.setAllowedMethods(List.of("GET", "POST", "PUT", "DELETE", "OPTIONS"));
+        config.setAllowCredentials(true);
         UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
         source.registerCorsConfiguration("/**", config);
         return source;
@@ -58,9 +66,11 @@ public class WebConfiguration {
         http.csrf(AbstractHttpConfigurer::disable);
         http.cors(cors -> cors.configure(http));
         http.logout(lOut->{
-            lOut.logoutUrl("/user/logout").invalidateHttpSession(true)
-                    .deleteCookies("JSESSIONID").deleteCookies("JSESSIONID")
-                    .logoutSuccessUrl(originAllowed);
+            lOut.logoutUrl("/user/logout")
+                    .invalidateHttpSession(true)
+                    .logoutSuccessHandler(
+                            new HttpStatusReturningLogoutSuccessHandler(HttpStatus.OK)
+                    );
 
             // Allow CORS for the logout URL
             lOut.addLogoutHandler((request, response, authentication) -> {
@@ -83,7 +93,13 @@ public class WebConfiguration {
         });
 
         http.oauth2ResourceServer(oauth ->{
-           oauth.jwt(Customizer.withDefaults());
+           oauth
+                   .bearerTokenResolver(bearerTokenResolver)
+                   .jwt(jwt -> jwt
+                           .jwtAuthenticationConverter(
+                                   jwtAuthenticationConverter
+                           )
+                   );
         });
 
         http

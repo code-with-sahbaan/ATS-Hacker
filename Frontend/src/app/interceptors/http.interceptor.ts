@@ -19,9 +19,7 @@ export class HttpConfigInterceptor implements HttpInterceptor {
   ): Observable<HttpEvent<any>> {
     // 🔐 Add headers (e.g., auth token)
     const modifiedReq = req.clone({
-      setHeaders: {
-        Authorization: `Bearer ${getJWTtoken()}`,
-      },
+      withCredentials:true,
       url: `${environment.apiUrl}${req.url}`,
     });
     return next.handle(modifiedReq).pipe(
@@ -33,7 +31,7 @@ export class HttpConfigInterceptor implements HttpInterceptor {
         },
         error: (error: HttpErrorResponse) => {
           // If token expires or never logged in
-          if (error.status === 403 && req.url != "/user/getUserDetails") {
+          if (error.status === 403) {
             logout();
           }
         },

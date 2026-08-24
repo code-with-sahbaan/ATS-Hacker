@@ -8,15 +8,19 @@ import code.with.sahbaan.neohire.ResponseDTO.UserResponse;
 import code.with.sahbaan.neohire.Services.JwtService;
 import code.with.sahbaan.neohire.Services.UserService;
 import code.with.sahbaan.neohire.Utils.Constants;
+import jakarta.servlet.http.HttpServletResponse;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.ResponseCookie;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.oauth2.jwt.Jwt;
 import org.springframework.security.oauth2.server.resource.authentication.JwtAuthenticationToken;
 import org.springframework.stereotype.Service;
 
+import java.time.Duration;
 import java.util.Optional;
 
 @Service
@@ -89,7 +93,7 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public BaseResponse<String> switchProfile() throws Exception {
+    public void switchProfile(HttpServletResponse response) throws Exception {
         try {
             Users users = getCurrentlyLoggedUser();
             if (users.getRole().equals(Constants.ROLE_CANDIDATE)) {
@@ -99,8 +103,17 @@ public class UserServiceImpl implements UserService {
             }
             saveOrUpdate(users);
             String accessToken = jwtService.generateToken(users);
-            String url = allowedOrigins + "/authorize?token=" + accessToken;
-            return new BaseResponse<>("Profile Switched Successfully", url);
+            // Secure Cookie
+            ResponseCookie accessTokenCookie = ResponseCookie.from(Constants.ACCESS_TOKEN, accessToken)
+                    .httpOnly(true)
+                    .sameSite("None")
+                    .secure(true)
+                    .path("/")
+                    .maxAge(Duration.ofDays(1))
+                    .build();
+
+            response.addHeader(HttpHeaders.SET_COOKIE, accessTokenCookie.toString());
+            response.sendRedirect(allowedOrigins);
         } catch (Exception e) {
             throw new Exception("Failed to switch Profile");
         }
