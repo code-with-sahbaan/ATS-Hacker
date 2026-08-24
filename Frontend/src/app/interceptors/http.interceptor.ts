@@ -10,9 +10,12 @@ import { Injectable } from '@angular/core';
 import { Observable, tap } from 'rxjs';
 import { getJWTtoken, logout } from '../utils/common.util';
 import { environment } from '../../environments/environment';
+import { UserService } from '../services/user.service';
 
 @Injectable()
 export class HttpConfigInterceptor implements HttpInterceptor {
+  constructor(public userService: UserService) {
+  }
   intercept(
     req: HttpRequest<any>,
     next: HttpHandler
@@ -32,7 +35,7 @@ export class HttpConfigInterceptor implements HttpInterceptor {
         error: (error: HttpErrorResponse) => {
           // If token expires or never logged in
           if (error.status === 403 && req.url != "/user/getUserDetails") {
-            logout();
+            this.userService.logout();
           }
         },
       })

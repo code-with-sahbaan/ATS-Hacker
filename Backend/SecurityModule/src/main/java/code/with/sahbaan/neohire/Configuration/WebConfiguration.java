@@ -71,12 +71,6 @@ public class WebConfiguration {
                     .logoutSuccessHandler(
                             new HttpStatusReturningLogoutSuccessHandler(HttpStatus.OK)
                     );
-
-            // Allow CORS for the logout URL
-            lOut.addLogoutHandler((request, response, authentication) -> {
-                response.addHeader("Access-Control-Allow-Origin", originAllowed);
-                response.addHeader("Access-Control-Allow-Credentials", "true");
-            });
         });
         http.sessionManagement(session ->
                 session.sessionCreationPolicy(SessionCreationPolicy.STATELESS)
