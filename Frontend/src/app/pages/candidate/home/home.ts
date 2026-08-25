@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { CardModule } from 'primeng/card';
 import { FileUpload, FileUploadEvent } from 'primeng/fileupload';
 import { UiService } from '../../../services/ui.service';
-import { formatDateTime, MAX_FILE_SIZE } from '../../../utils/common.util';
+import { formatDateTime, getHomePageRedirection, MAX_FILE_SIZE } from '../../../utils/common.util';
 import { Resume, ResumeService } from '../../../services/resume.service';
 import { finalize } from 'rxjs';
 import { Skeleton } from 'primeng/skeleton';
@@ -11,6 +11,8 @@ import { AccordionModule } from 'primeng/accordion';
 import { ButtonModule } from 'primeng/button';
 import { JobService, PostedJob } from '../../../services/job.service';
 import { DialogModule } from 'primeng/dialog';
+import { UserService } from '../../../services/user.service';
+import { environment } from '../../../../environments/environment';
 
 @Component({
   selector: 'app-home',
@@ -19,7 +21,7 @@ import { DialogModule } from 'primeng/dialog';
   styleUrl: './home.css'
 })
 export class Home implements OnInit {
-  
+
   resumeDetails: Resume | undefined;
   resumeLoading: boolean = false;
   jobsLoading: boolean = false;
@@ -27,7 +29,7 @@ export class Home implements OnInit {
   jobs: PostedJob[] = [];
   selectedJob: PostedJob | undefined;
 
-  constructor(public uiService: UiService, public resumeService: ResumeService, public jobService: JobService) {
+  constructor(public uiService: UiService, public resumeService: ResumeService, public jobService: JobService, private userService: UserService) {
     setTimeout(() => this.setHeading(), 0);
   }
 
@@ -43,6 +45,7 @@ export class Home implements OnInit {
   initFetching() {
     this.getResumeDetails();
     this.getRecommendedJobs();
+    this.getUserDetails()
   }
 
   onUpload(event: any) {
@@ -129,8 +132,32 @@ export class Home implements OnInit {
     return formatDateTime(date!);
   }
 
-  showJobDialog(job: PostedJob){
+  showJobDialog(job: PostedJob) {
     this.selectedJob = job;
     this.visibleJobDialog = true;
+  }
+
+  getUserDetails() {
+    this.uiService.showSpinner();
+    this.userService
+      .getUserDetails()
+      .pipe(
+        finalize(() => {
+          // Hiding Loader after API call completion
+          this.uiService.hideSpinner();
+        })
+      )
+      .subscribe({
+        next: (response) => {
+          // Showing success Toast
+          const body = response.responseBody;
+          const user = body;
+          localStorage.setItem("USER", JSON.stringify(user));
+          this.userService.currentUser = body;
+        },
+        error: (error) => {
+          // Showing error toast
+        },
+      });
   }
 }

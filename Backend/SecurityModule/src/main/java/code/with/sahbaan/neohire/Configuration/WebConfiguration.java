@@ -9,7 +9,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseCookie;
 import org.springframework.security.config.Customizer;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
@@ -18,11 +20,13 @@ import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.oauth2.server.resource.authentication.JwtAuthenticationConverter;
 import org.springframework.security.oauth2.server.resource.web.BearerTokenResolver;
 import org.springframework.security.web.SecurityFilterChain;
+import org.springframework.security.web.authentication.logout.CookieClearingLogoutHandler;
 import org.springframework.security.web.authentication.logout.HttpStatusReturningLogoutSuccessHandler;
 import org.springframework.web.cors.CorsConfiguration;
 import org.springframework.web.cors.CorsConfigurationSource;
 import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
 
+import java.time.Duration;
 import java.util.List;
 import java.util.Set;
 
@@ -65,8 +69,25 @@ public class WebConfiguration {
     protected SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
         http.csrf(AbstractHttpConfigurer::disable);
         http.cors(cors -> cors.configure(http));
-        http.logout(lOut->{
-            lOut.logoutUrl("/user/logout")
+        http.logout(logout -> {
+            logout
+                    .logoutUrl("/user/logout")
+                    .addLogoutHandler((request, response, authentication) -> {
+
+                        ResponseCookie deleteCookie = ResponseCookie
+                                .from(Constants.ACCESS_TOKEN, "")
+                                .httpOnly(true)
+                                .secure(true)
+                                .sameSite("None")
+                                .path("/")
+                                .maxAge(Duration.ZERO)
+                                .build();
+
+                        response.addHeader(
+                                HttpHeaders.SET_COOKIE,
+                                deleteCookie.toString()
+                        );
+                    })
                     .invalidateHttpSession(true)
                     .logoutSuccessHandler(
                             new HttpStatusReturningLogoutSuccessHandler(HttpStatus.OK)
@@ -109,6 +130,7 @@ public class WebConfiguration {
         http.authorizeHttpRequests(request -> {
             request.requestMatchers("/user/**").hasAnyAuthority(Constants.ROLE_CANDIDATE, Constants.ROLE_RECRUITER);
             request.requestMatchers("/resume/**").hasAuthority(Constants.ROLE_CANDIDATE);
+            request.requestMatchers("/job/**").hasAuthority(Constants.ROLE_RECRUITER);
         });
 
         http.authorizeHttpRequests(request -> {

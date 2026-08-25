@@ -96,7 +96,11 @@ public class ResumeServiceImpl implements ResumeService {
     public BaseResponse<List<GetJobResponse>> getRecommendedJobs() throws Exception {
         try {
             Users users = userService.getCurrentlyLoggedUser();
-            Resume resume = resumeRepository.findByCandidate(users).get();
+            Optional<Resume> resumeOptional = resumeRepository.findByCandidate(users);
+            if(resumeOptional.isEmpty()){
+                return new BaseResponse<>("No Resume Uploaded yet.", null);
+            }
+            Resume resume = resumeOptional.get();
             List<Document> documents = ragService.getSimilarityJobs(resume.getResumeText());
             Map<String, Double> jobRanking = documents.stream()
                     .collect(Collectors.groupingBy(

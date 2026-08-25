@@ -13,7 +13,7 @@ import { finalize } from 'rxjs';
   templateUrl: './sign-in.html',
   styleUrl: './sign-in.css'
 })
-export class SignIn{
+export class SignIn implements OnInit {
 
   user: User = {
       name: '',
@@ -25,15 +25,17 @@ export class SignIn{
 
   constructor(private route: Router, public userService: UserService, public uiService: UiService ) { }
 
+  ngOnInit(): void {
+    setTimeout(() => this.performRedirect(), 0)
+  }
   continueWithGoogle() {
-    this.performRedirect();
+    this.auth();
   }
 
-
-  performRedirect() {
-      this.uiService.showSpinner();
+  auth(){
+    this.uiService.showSpinner();
       this.userService
-        .getUserDetails()
+        .auth()
         .pipe(
           finalize(() => {
             // Hiding Loader after API call completion
@@ -43,21 +45,23 @@ export class SignIn{
         .subscribe({
           next: (response) => {
             // Showing success Toast
-            this.uiService.showSuccess(response.responseMessage);
-            const body = response.responseBody;
-            const token = getJWTtoken();
-            this.user = body;
-            this.user.accessToken = token;
-            localStorage.setItem("USER", JSON.stringify(this.user));
-            this.userService.currentUser = body;
-            const url = getHomePageRedirection(body);
-            this.route.navigate([url]);
+            this.uiService.showSuccess("Welcome Again")
           },
           error: (error) => {
             // Showing error toast
-           this.uiService.showError("Session Expired!");
            window.location.href = environment.loginUrl;
           },
         });
     }
+
+
+  performRedirect() {
+    try {
+      this.user = JSON.parse(localStorage.getItem("USER")!)
+      const url = getHomePageRedirection(this.user);
+      this.route.navigate([url]);
+    } catch (error) {
+      this.uiService.showError("Session Expired! Please re-login");
+    }
+  }
 }

@@ -34,7 +34,7 @@ export class HttpConfigInterceptor implements HttpInterceptor {
         },
         error: (error: HttpErrorResponse) => {
           // If token expires or never logged in
-          if (error.status === 403 && req.url != "/user/getUserDetails") {
+          if (error.status === 403 && req.url != "/user/v1/auth") {
             this.userService.logout();
           }
         },

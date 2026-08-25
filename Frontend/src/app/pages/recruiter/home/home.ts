@@ -9,6 +9,8 @@ import { formatDateTime } from '../../../utils/common.util';
 import { CardModule } from 'primeng/card';
 import { Resume, ResumeService } from '../../../services/resume.service';
 import { SkeletonModule } from 'primeng/skeleton';
+import { environment } from '../../../../environments/environment';
+import { UserService } from '../../../services/user.service';
 
 @Component({
   selector: 'app-home',
@@ -23,10 +25,11 @@ export class Home {
   public resumes: Resume[] = [];
   fetchinResume: boolean = false;
 
-  constructor(public uiService: UiService, public jobService: JobService, public resumeService: ResumeService) {
+  constructor(public uiService: UiService, public jobService: JobService, public resumeService: ResumeService, private userService: UserService) {
     setTimeout(() => {
       this.setHeading();
       this.fetchJobs();
+      this.getUserDetails();
     }, 0);
   }
 
@@ -90,5 +93,29 @@ export class Home {
   fDt(date: string) {
     return formatDateTime(date);
   }
+
+  getUserDetails() {
+      this.uiService.showSpinner();
+      this.userService
+        .getUserDetails()
+        .pipe(
+          finalize(() => {
+            // Hiding Loader after API call completion
+            this.uiService.hideSpinner();
+          })
+        )
+        .subscribe({
+          next: (response) => {
+            // Showing success Toast
+            const body = response.responseBody;
+            const user = body;
+            localStorage.setItem("USER", JSON.stringify(user));
+            this.userService.currentUser = body;
+          },
+          error: (error) => {
+            // Showing error toast
+          },
+        });
+    }
 
 }

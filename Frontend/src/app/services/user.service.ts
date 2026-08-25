@@ -32,6 +32,10 @@ export class UserService {
     return this.http.get('/user/v1/getUserDetails').pipe();
   }
 
+  auth(): Observable<any> {
+    return this.http.get('/user/v1/auth').pipe();
+  }
+
   switchProfile(): Observable<any> {
     return this.http.get('/user/v1/switchProfile').pipe();
   }

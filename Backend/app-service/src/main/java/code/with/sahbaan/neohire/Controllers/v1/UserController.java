@@ -38,4 +38,10 @@ public class UserController {
         log.info("Executing switchProfile in UserController");
         return new ResponseEntity<>(userService.switchProfile(response), HttpStatus.OK);
     }
+
+    @GetMapping("auth")
+    public ResponseEntity<?> auth() throws Exception {
+        log.info("Executing auth in UserController");
+        return new ResponseEntity<>(HttpStatus.OK);
+    }
 }

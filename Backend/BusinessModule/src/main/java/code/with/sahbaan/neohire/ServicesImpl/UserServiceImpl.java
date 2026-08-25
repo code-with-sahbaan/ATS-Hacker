@@ -113,7 +113,7 @@ public class UserServiceImpl implements UserService {
                     .build();
 
             response.addHeader(HttpHeaders.SET_COOKIE, accessTokenCookie.toString());
-            String url = allowedOrigins;
+            String url = allowedOrigins + (users.getRole().equals(Constants.ROLE_CANDIDATE) ? "/candidate" : "/recruiter");
             return new BaseResponse<>("Profile Switched Successfully", url);
         } catch (Exception e) {
             throw new Exception("Failed to switch Profile");
